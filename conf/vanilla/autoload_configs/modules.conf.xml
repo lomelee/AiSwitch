@@ -50,7 +50,7 @@
     <load module="mod_verto"/>
 
     <!-- Applications -->
-    <load module="mod_signalwire"/>
+    <!-- <load module="mod_signalwire"/> -->
     <load module="mod_commands"/>
     <load module="mod_conference"/>
     <!-- <load module="mod_curl"/> -->
@@ -71,7 +71,7 @@
     <load module="mod_valet_parking"/>
     <!--<load module="mod_fsk"/>-->
     <!--<load module="mod_spy"/>-->
-    <!--<load module="mod_sms"/>-->
+    <load module="mod_sms"/>
     <!--<load module="mod_sms_flowroute"/>-->
     <!--<load module="mod_smpp"/>-->
     <!--<load module="mod_random"/>-->
@@ -109,7 +109,7 @@
     <load module="mod_png"/>
     <!-- <load module="mod_shell_stream"/> -->
     <!--For icecast/mp3 streams/files-->
-    <!--<load module="mod_shout"/>-->
+    <load module="mod_shout"/>
     <!--For local streams (play all the files in a directory)-->
     <load module="mod_local_stream"/>
     <load module="mod_tone_stream"/>
@@ -130,8 +130,9 @@
     <!-- <load module="mod_flite"/> -->
     <!-- <load module="mod_pocketsphinx"/> -->
     <!-- <load module="mod_cepstral"/> -->
-    <!-- <load module="mod_tts_commandline"/> -->
+    <load module="mod_tts_commandline"/>
     <!-- <load module="mod_rss"/> -->
+    <load module="mod_unimrcp"/>
 
     <!-- Say -->
     <load module="mod_say_en"/>
