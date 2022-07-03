@@ -962,12 +962,12 @@ SWITCH_DECLARE(int32_t) set_low_priority(void)
 	 * setpriority() works on FreeBSD (6.2), nice() doesn't
 	 */
 	if (setpriority(PRIO_PROCESS, getpid(), 19) < 0) {
-		fprintf(stderr, "ERROR: Could not set nice level\n");
+		fprintf(stderr, "ERROR: 1 Could not set nice level\n");
 		return -1;
 	}
 #else
 	if (nice(19) != 19) {
-		fprintf(stderr, "ERROR: Could not set nice level\n");
+		fprintf(stderr, "ERROR: 2 Could not set nice level\n");
 		return -1;
 	}
 #endif
@@ -1007,13 +1007,13 @@ SWITCH_DECLARE(int32_t) set_realtime_priority(void)
 	}
 
 	if (sched_setscheduler(0, SCHED_FIFO, &sched) < 0) {
-		fprintf(stderr, "WARN: Failed to set SCHED_FIFO scheduler (%s)\n", strerror(errno));
+		fprintf(stderr, "WARN: 1 Failed to set SCHED_FIFO scheduler (%s)\n", strerror(errno));
 	} else {
 		return 0;
 	}
 
 	if (setpriority(PRIO_PROCESS, 0, -10) < 0) {
-		fprintf(stderr, "ERROR: Could not set nice level\n");
+		fprintf(stderr, "ERROR: 3 Could not set nice level\n");
 		return -1;
 	}
 
@@ -1022,7 +1022,7 @@ SWITCH_DECLARE(int32_t) set_realtime_priority(void)
 
 #ifdef USE_SCHED_SETSCHEDULER
 	if (sched_setscheduler(0, SCHED_FIFO, &sched) < 0) {
-		fprintf(stderr, "ERROR: Failed to set SCHED_FIFO scheduler (%s)\n", strerror(errno));
+		fprintf(stderr, "ERROR: 2 Failed to set SCHED_FIFO scheduler (%s)\n", strerror(errno));
 		sched.sched_priority = 0;
 		if (sched_setscheduler(0, SCHED_OTHER, &sched) < 0 ) {
 			fprintf(stderr, "ERROR: Failed to set SCHED_OTHER scheduler (%s)\n", strerror(errno));
@@ -1036,12 +1036,12 @@ SWITCH_DECLARE(int32_t) set_realtime_priority(void)
 	 * setpriority() works on FreeBSD (6.2), nice() doesn't
 	 */
 	if (setpriority(PRIO_PROCESS, getpid(), -10) < 0) {
-		fprintf(stderr, "ERROR: Could not set nice level\n");
+		fprintf(stderr, "ERROR: 4 Could not set nice level\n");
 		return -1;
 	}
 #else
 	if (nice(-10) != -10) {
-		fprintf(stderr, "ERROR: Could not set nice level\n");
+		fprintf(stderr, "ERROR: 5 Could not set nice level\n");
 		return -1;
 	}
 #endif
