@@ -46,4 +46,4 @@ RUN cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" 
 RUN chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
 RUN mv /usr/local/freeswitch/conf /usr/local/freeswitch/.conf
 # copy phone music and sounds to fs dir
-COPY sounds /usr/local/freeswitch/
+COPY sounds /usr/local/freeswitch/sounds
