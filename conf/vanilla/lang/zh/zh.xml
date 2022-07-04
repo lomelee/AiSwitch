@@ -1,5 +1,5 @@
 <include>
-  <language name="zh" say-module="zh" sound-prefix="$${sound_prefix}/zh/cn/link/" tts-engine="mod_tts_commandline" tts-voice="Ting-ting">
+  <language name="zh" say-module="zh" sound-prefix="$${sound_prefix}" tts-engine="mod_tts_commandline" tts-voice="Ting-ting">
     <phrases>
       <macros>
         <X-PRE-PROCESS cmd="include" data="demo/*.xml"/> <!-- Note: this now grabs whole subdir, previously grabbed only demo.xml -->
