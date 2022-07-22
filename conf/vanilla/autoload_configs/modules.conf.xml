@@ -14,7 +14,7 @@
 
     <!-- XML Interfaces -->
     <!-- <load module="mod_xml_rpc"/> -->
-    <!-- <load module="mod_xml_curl"/> -->
+    <load module="mod_xml_curl"/>
     <!-- <load module="mod_xml_cdr"/> -->
     <!-- <load module="mod_xml_radius"/> -->
     <!-- <load module="mod_xml_scgi"/> -->
@@ -87,7 +87,7 @@
     <!-- Dialplan Interfaces -->
     <!-- <load module="mod_dialplan_directory"/> -->
     <load module="mod_dialplan_xml"/>
-    <load module="mod_dialplan_asterisk"/>
+    <!-- <load module="mod_dialplan_asterisk"/> -->
 
     <!-- Codec Interfaces -->
     <load module="mod_spandsp"/>
