@@ -49,7 +49,7 @@ applications/mod_sms
 applications/mod_spandsp
 #applications/mod_spy
 #applications/mod_stress
-applications/mod_test
+#applications/mod_test
 #applications/mod_translate
 applications/mod_valet_parking
 #applications/mod_video_filter
@@ -82,7 +82,7 @@ codecs/mod_opus
 #codecs/mod_theora
 databases/mod_mariadb
 databases/mod_pgsql
-dialplans/mod_dialplan_asterisk
+#dialplans/mod_dialplan_asterisk
 #dialplans/mod_dialplan_directory
 dialplans/mod_dialplan_xml
 #directories/mod_ldap

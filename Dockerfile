@@ -31,6 +31,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install --no-in
     liblua5.2-dev \
     # mod_opus
     libopus-dev \
+    # mod_mariadb (mariadb 和 mysql)
+    libmariadb-dev \
     # mod_pgsql
     libpq-dev \
     # mod_sndfile
