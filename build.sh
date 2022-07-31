@@ -33,7 +33,16 @@ cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --wi
 # 添加pgsql驱动套件编译选项
 chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
 # chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure --enable-core-pgsql-support && make -j`nproc` && make install
-# chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure --enable_core_pgsql_pkgconfig && make -j`nproc` && make install
+# chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure --enable_core_pgsql-pkgconfig && make -j`nproc` && make install
 mv /usr/local/freeswitch/conf /usr/local/freeswitch/.conf
 # copy phone music and sounds to fs dir files
-cp sounds /usr/local/freeswitch/sounds
+cp -R sounds /usr/local/freeswitch/sounds
+
+
+# 增加软连接
+ln -sf /usr/local/freeswitch/bin/freeswitch /usr/bin/ \
+    && ln -sf /usr/local/freeswitch/bin/fs_cli /usr/bin/
+
+# 设置时区
+ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo Asia/Shanghai > /etc/timezone
+apt-get update && apt-get install -y locales && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
