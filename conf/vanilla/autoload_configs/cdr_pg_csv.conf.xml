@@ -1,11 +1,10 @@
 <configuration name="cdr_pg_csv.conf" description="CDR PG CSV Format">
   <settings>
     <!-- See parameters for PQconnectdb() at http://www.postgresql.org/docs/8.4/static/libpq-connect.html -->
-    <!-- <param name="db-info" value="host=localhost dbname=cdr connect_timeout=10" /> -->
-    <param name="db-info" value="host=$${dbHost} dbname=$${dbName} connect_timeout=$${dbTimeout}" />
+    <!-- <param name="db-info" value="host=localhost dbname=cdr connect_timeout=10"/> -->
+    <param name="db-info" value="host=$${dbHost} dbname=$${dbName} user=$${dbUser} password='$${dbPwd}' connect_timeout=$${dbTimeout}" />
     <!-- CDR table name -->
     <param name="db-table" value="cdr" />
-
     <!-- Log a-leg (a), b-leg (b) or both (ab) -->
     <param name="legs" value="a" />
 
