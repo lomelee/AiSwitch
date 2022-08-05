@@ -1,4 +1,4 @@
-<configuration name="verto.conf" description="HTML5 Verto Endpoint">
+<configuration name="verto.conf" description="HTML5 WebRTC Verto Endpoint">
 
   <settings>
     <param name="debug" value="0"/>

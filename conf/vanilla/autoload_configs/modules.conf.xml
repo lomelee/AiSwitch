@@ -48,7 +48,8 @@
     <!-- <load module="mod_khomp"/>   -->
     <load module="mod_rtc"/>
     <!-- <load module="mod_rtmp"/>   -->
-    <load module="mod_verto"/>
+    <!-- 实现WebRTC, mod_verto是信令协议。它依赖于mod_rtc来提供安全的媒体流服务 -->
+    <!-- <load module="mod_verto"/> -->
 
     <!-- Applications -->
     <!-- <load module="mod_signalwire"/> -->
