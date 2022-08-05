@@ -182,6 +182,7 @@
 	   postgresql://other@localhost/otherdb?connect_timeout=10&application_name=myapp
 	   postgresql:///mydb?host=localhost&port=5433
     -->
+    <param name="core-db-dsn" value="pgsql://hostaddr=192.168.2.10 dbname=aisw user=aiscc password='long@123' options='-c client_min_messages=NOTICE'" />
     <!-- <param name="core-db-dsn" value="pgsql://hostaddr=127.0.0.1 dbname=freeswitch user=freeswitch password='' options='-c client_min_messages=NOTICE'" /> -->
     <!-- <param name="core-db-dsn" value="postgresql://freeswitch:@127.0.0.1/freeswitch?options=-c%20client_min_messages%3DNOTICE" /> -->
     <!-- <param name="core-db-dsn" value="mariadb://Server=localhost;Database=freeswitch;Uid=freeswitch;Pwd=pass;" /> -->
@@ -207,4 +208,3 @@
   </settings>
 
 </configuration>
-

@@ -1,7 +1,9 @@
 <configuration name="cdr_pg_csv.conf" description="CDR PG CSV Format">
   <settings>
     <!-- See parameters for PQconnectdb() at http://www.postgresql.org/docs/8.4/static/libpq-connect.html -->
-    <param name="db-info" value="host=localhost dbname=cdr connect_timeout=10" />
+    <!-- pgsql://hostaddr=0.0.0.0 dbname=freeswitch user=postgres password='dongjb' options='-c client_min_messages=NOTICE -->
+    <!-- host=0.0.0.0 dbname=freeswitch connect_timeout=10 -->
+    <param name="db-info" value="host=192.168.2.10 dbname=aisw connect_timeout=10" />
     <!-- CDR table name -->
     <!--<param name="db-table" value="cdr"/>-->
 
@@ -34,7 +36,9 @@
     <field var="accountcode"/>
     <field var="read_codec"/>
     <field var="write_codec"/>
-    <!-- <field var="sip_hangup_disposition"/> -->
-    <!-- <field var="ani"/> -->
+    <field var="sip_hangup_disposition"/>
+    <field var="ani"/>
+    <!-- 新增扩展数据字段 -->
+    <field var="fuuid"/>
   </schema>
 </configuration>
