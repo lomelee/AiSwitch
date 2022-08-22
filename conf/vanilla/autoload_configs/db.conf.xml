@@ -1,5 +1,6 @@
 <configuration name="db.conf" description="LIMIT DB Configuration">
   <settings>
     <!--<param name="odbc-dsn" value="dsn:user:pass"/>-->
+    <param name="odbc-dsn" value="pgsql://hostaddr=$${dbHost} dbname=$${dbName} user=$${dbUser} password='$${dbPwd}' options='-c client_min_messages=NOTICE'" />
   </settings>
 </configuration>
