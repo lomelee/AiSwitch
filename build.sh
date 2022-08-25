@@ -30,7 +30,7 @@ libshout3-dev libmpg123-dev libmp3lame-dev
 cd /usr/src/libs/libks && cmake . -DCMAKE_INSTALL_PREFIX=/usr -DWITH_LIBBACKTRACE=1 && make install 
 cd /usr/src/libs/sofia-sip && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --with-glib=no --without-doxygen --disable-stun --prefix=/usr && make -j`nproc --all` && make install
 cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --prefix=/usr && make -j`nproc --all` && make install
-# 添加pgsql驱动套件编译选项
+# 添加pgsql驱动套件编译选项（PgSQL 不在需要 --enable-core-pgsql-support 参数，编译前需要 make clean 一下）
 chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
 # chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure --enable-core-pgsql-support && make -j`nproc` && make install
 # chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure --enable_core_pgsql-pkgconfig && make -j`nproc` && make install

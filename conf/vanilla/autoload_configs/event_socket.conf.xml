@@ -4,7 +4,7 @@
     <param name="listen-ip" value="$${esl_bind_ip}"/>
     <param name="listen-port" value="$${esl_listen_port}"/>
     <param name="password" value="$${esl_bind_pwd}"/>
-    <!--<param name="apply-inbound-acl" value="loopback.auto"/>-->
+    <param name="apply-inbound-acl" value="esl"/>
     <!--<param name="stop-on-bind-error" value="true"/>-->
   </settings>
 </configuration>
