@@ -20,8 +20,10 @@ libldns-dev \
 libavformat-dev libswscale-dev libavresample-dev \
 liblua5.2-dev \
 libopus-dev \
+# mysql 模块编译依赖
 libmariadb-dev \
-libpq-dev \
+# PgSQL 模块编译依赖
+# libpq-dev \
 libsndfile1-dev libflac-dev libogg-dev libvorbis-dev \
 libshout3-dev libmpg123-dev libmp3lame-dev 
 
