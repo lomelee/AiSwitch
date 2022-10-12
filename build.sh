@@ -13,7 +13,7 @@ apt-get update && apt-get -yq install --no-install-recommends build-essential cm
 
 # add runtime depend
 apt-get update && apt-get -yq install --no-install-recommends \
-libssl-dev zlib1g-dev libdb-dev unixodbc-dev libncurses5-dev libexpat1-dev libgdbm-dev bison  libtpl-dev libtiff5-dev uuid-dev \
+libssl-dev zlib1g-dev libdb-dev unixodbc-dev libncurses5-dev libexpat1-dev libgdbm-dev bison libtpl-dev libtiff5-dev uuid-dev \
 libpcre3-dev libedit-dev libsqlite3-dev libcurl4-openssl-dev nasm \
 libogg-dev libspeex-dev libspeexdsp-dev \
 libldns-dev \

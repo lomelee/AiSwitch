@@ -32,6 +32,8 @@ ex() {
 }
 
 setup_modules() {
+  # 每次修改 modules.conf.in 后，都要使 modules.conf 生效
+  rm modules.conf -f
   if [ ! -f modules.conf ]; then 
     cp build/modules.conf.in modules.conf
   fi
