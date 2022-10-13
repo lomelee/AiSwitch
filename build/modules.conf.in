@@ -111,7 +111,7 @@ event_handlers/mod_event_socket
 #event_handlers/mod_format_cdr
 #event_handlers/mod_json_cdr
 #event_handlers/mod_radius_cdr
-#event_handlers/mod_odbc_cdr
+event_handlers/mod_odbc_cdr
 #event_handlers/mod_kazoo
 #event_handlers/mod_rayo
 #event_handlers/mod_smpp
@@ -167,8 +167,8 @@ xml_int/mod_xml_cdr
 xml_int/mod_xml_curl
 #xml_int/mod_xml_ldap
 #xml_int/mod_xml_radius
-xml_int/mod_xml_rpc
-xml_int/mod_xml_scgi
+#xml_int/mod_xml_rpc
+#xml_int/mod_xml_scgi
 
 #mod_freetdm|https://github.com/freeswitch/freetdm.git -b master
 

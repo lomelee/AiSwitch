@@ -34,7 +34,7 @@ cd /usr/src/libs/sofia-sip && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --
 cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --prefix=/usr && make -j`nproc --all` && make install
 
 # 编译前可以 make clean 一下， 获取直接 git clean -xfd 清空非版本控制的数据
-# chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
+chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
 # mysql 或者 mariadb 也不需要 添加 --enable-core-odbc-support 参数支持
 # chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure --enable-core-odbc-support && make -j`nproc` && make install
 # 添加pgsql驱动套件编译选项（PgSQL 不在需要 --enable-core-pgsql-support  参数，编译前需要 make clean 一下）
