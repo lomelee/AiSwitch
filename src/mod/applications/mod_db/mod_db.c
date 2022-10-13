@@ -271,8 +271,9 @@ SWITCH_LIMIT_STATUS(limit_status_db)
 }
 
 /* INIT / Config */
+// 配置允许 core db create and connetion in mysql or mariadb
 
-static switch_xml_config_string_options_t limit_config_dsn = { NULL, 0, "^pgsql|^odbc|^sqlite|[^:]+:[^:]*:.*" };
+static switch_xml_config_string_options_t limit_config_dsn = { NULL, 0, "^mariadb|^mysql|^pgsql|^odbc|^sqlite|[^:]+:[^:]*:.*" };
 
 static switch_xml_config_item_t config_settings[] = {
 	SWITCH_CONFIG_ITEM("odbc-dsn", SWITCH_CONFIG_STRING, 0, &globals.odbc_dsn, NULL, &limit_config_dsn,

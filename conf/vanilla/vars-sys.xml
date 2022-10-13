@@ -1,7 +1,7 @@
 <!-- 此处配置加载优先于 var.xml -->
 <include>
 	<!-- 外网IP配置 -->
-    <X-PRE-PROCESS cmd="set" data="ext_ip=192.168.2.11" />
+	<X-PRE-PROCESS cmd="set" data="ext_ip=192.168.2.11" />
 
 	<!-- internal SIP Profile SIP Port -->
 	<X-PRE-PROCESS cmd="set" data="internal_sip_port=21010" />
@@ -22,11 +22,12 @@
 	<X-PRE-PROCESS cmd="set" data="esl_listen_port=21014" />
 	<X-PRE-PROCESS cmd="set" data="esl_bind_pwd=long@123" />
 
-	<!-- db 配置，pgsql -->
+	<!-- db 配置，mysql -->
 	<X-PRE-PROCESS cmd="set" data="dbHost=192.168.2.62" />
-	<X-PRE-PROCESS cmd="set" data="dbName=aisw" />
-	<X-PRE-PROCESS cmd="set" data="dbUser=aiscc" />
-	<X-PRE-PROCESS cmd="set" data="dbPwd=long@123" />
+	<X-PRE-PROCESS cmd="set" data="dbPort=6033" />
+	<X-PRE-PROCESS cmd="set" data="dbName=aiswitch" />
+	<X-PRE-PROCESS cmd="set" data="dbUser=xnjx" />
+	<X-PRE-PROCESS cmd="set" data="dbPwd=xnjx@123!" />
 	<X-PRE-PROCESS cmd="set" data="dbTimeout=10" />
 
 	<!-- xml_rpc a simple webUi, X-PRE-PROCESS 不能直接注释，要修改前缀才有效-->

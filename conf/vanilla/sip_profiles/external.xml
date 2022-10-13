@@ -52,7 +52,9 @@
     <!--<param name="force-register-db-domain" value="$${domain}"/>-->
     <!-- ************************************************* -->
     <!-- 设置PgSQL数据库 -->
-    <param name="odbc-dsn" value="pgsql://hostaddr=$${dbHost} dbname=$${dbName} user=$${dbUser} password='$${dbPwd}' options='-c client_min_messages=NOTICE' application_name='freeswitch'" />
+    <!-- <param name="odbc-dsn" value="pgsql://hostaddr=$${dbHost} dbname=$${dbName} user=$${dbUser} password='$${dbPwd}' options='-c client_min_messages=NOTICE' application_name='freeswitch'" /> -->
+    <!-- 设置 mysql 或者 mariadb 数据库 -->
+    <param name="odbc-dsn" value="mariadb://Server=$${dbHost};Port=$${dbPort};Database=$${dbName};Uid=$${dbUser};Pwd=$${dbPwd};" />
 
     <!--<param name="aggressive-nat-detection" value="true"/>-->
     <param name="inbound-codec-negotiation" value="generous"/>

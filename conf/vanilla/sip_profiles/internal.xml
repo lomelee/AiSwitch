@@ -238,7 +238,9 @@
 
     <!-- Or, if you have PGSQL support, you can use that -->
     <!--<param name="odbc-dsn" value="pgsql://hostaddr=127.0.0.1 dbname=freeswitch user=freeswitch password='' options='-c client_min_messages=NOTICE' application_name='freeswitch'" />-->
-    <param name="odbc-dsn" value="pgsql://hostaddr=$${dbHost} dbname=$${dbName} user=$${dbUser} password='$${dbPwd}' options='-c client_min_messages=NOTICE' application_name='freeswitch'" />
+    <!-- <param name="odbc-dsn" value="pgsql://hostaddr=$${dbHost} dbname=$${dbName} user=$${dbUser} password='$${dbPwd}' options='-c client_min_messages=NOTICE' application_name='freeswitch'" /> -->
+    <!-- 设置 mysql 或者 mariadb 数据库 -->
+    <param name="odbc-dsn" value="mariadb://Server=$${dbHost};Port=$${dbPort};Database=$${dbName};Uid=$${dbUser};Pwd=$${dbPwd};" />
     <!--Uncomment to set all inbound calls to no media mode-->
     <!--<param name="inbound-bypass-media" value="true"/>-->
 

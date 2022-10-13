@@ -15,7 +15,7 @@
     <!-- XML Interfaces -->
     <!-- <load module="mod_xml_rpc"/> -->
     <load module="mod_xml_curl"/>
-    <!-- <load module="mod_xml_cdr"/> -->
+    <load module="mod_xml_cdr"/>
     <!-- <load module="mod_xml_radius"/> -->
     <!-- <load module="mod_xml_scgi"/> -->
 
@@ -24,6 +24,7 @@
     <!-- <load module="mod_cdr_csv"/> -->
     <!-- <load module="mod_cdr_pg_csv"/> -->
     <!-- <load module="mod_cdr_sqlite"/> -->
+    <!-- <load module="mod_odbc_cdr"/> -->
     <!-- <load module="mod_event_multicast"/> -->
     <load module="mod_event_socket"/>
     <!-- <load module="mod_event_zmq"/> -->
