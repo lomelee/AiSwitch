@@ -34,7 +34,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install --no-in
     # mod_mariadb (mariadb 和 mysql)
     libmariadb-dev \
     # mod_pgsql
-    libpq-dev \
+    # libpq-dev \
     # mod_sndfile
     libsndfile1-dev libflac-dev libogg-dev libvorbis-dev \
     # mod_shout(mp3)
