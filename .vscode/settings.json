@@ -1,4 +1,17 @@
 {
     "C_Cpp.errorSquiggles": "Disabled",
-    "search.useIgnoreFiles": true
+    "search.useIgnoreFiles": true,
+    "files.associations": {
+        "array": "c",
+        "compare": "c",
+        "functional": "c",
+        "istream": "c",
+        "ostream": "c",
+        "ranges": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "switch_channel.h": "c",
+        "typeinfo": "c"
+    }
 }

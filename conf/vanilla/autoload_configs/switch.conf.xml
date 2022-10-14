@@ -13,125 +13,71 @@
     <key name="10" value="sofia profile internal siptrace on"/>
     <key name="11" value="sofia profile internal siptrace off"/>
     <key name="12" value="version"/>
-  </cli-keybindings> 
-  
+  </cli-keybindings>
+
   <default-ptimes>
-    <!-- Set this to override the 20ms assumption of various codecs in the sdp with no ptime defined -->
+    <!-- 如果没有指定编码器的ptime, 默认 SDP中数据为 20ms -->
     <!-- <codec name="G729" ptime="40"/> -->
   </default-ptimes>
-  
-  <settings>
-    <!-- Colorize the Console -->
-    <param name="colorize-console" value="true"/>
 
-    <!--Include full timestamps in dialplan logs -->
+  <settings>
+    <!-- 彩色控制台 -->
+    <param name="colorize-console" value="true"/>
+    <!-- 是否在拨号计划日志中，包含明细时间 timestamps -->
     <param name="dialplan-timestamps" value="false"/>
 
-    <!-- Run the timer at 20ms by default and drop down as needed unless you set 1m-timer=true which was previous default -->
+    <!-- 定时器默认20ms, 你可以设置更快的定时器事件 1m-timer=true -->
     <!-- <param name="1ms-timer" value="true"/> -->
 
-    <!--
-	Set the Switch Name for HA environments.
-	When setting the switch name, it will override the system hostname for all DB and CURL requests
-	allowing cluster environments such as RHCS to have identical FreeSWITCH configurations but run
-	as different hostnames.
-    -->
-    <!-- <param name="switchname" value="freeswitch"/> -->
+    <!-- 在 HA 环境中设置 Switch 名称，设置Switch名称时，它将覆盖所有数据库DB中的系统主机名和curl请求，允许群集环境（例如RHCS）具有相同的FreesWitch配置，但作为不同的主机名运行 -->
+    <!-- <param name="switchname" value="AiSwitch"/> -->
+    <!-- CPU 空闲控件时间，默认30秒 -->
     <!-- <param name="cpu-idle-smoothing-depth" value="30"/> -->
 
-
-    <!-- Maximum number of simultaneous DB handles open -->
+    <!-- 最大同时打开的DB句柄数量 -->
     <param name="max-db-handles" value="50"/>
-    <!-- Maximum number of seconds to wait for a new DB handle before failing -->
+    <!-- 句柄打开的超时时间，单位：秒 -->
     <param name="db-handle-timeout" value="10"/>
 
-    <!-- Minimum idle CPU before refusing calls -->
+    <!-- 在拒绝电话之前，最小闲置CPU -->
     <!-- <param name="min-idle-cpu" value="25"/> -->
 
-    <!-- Interval between heartbeat events -->
+    <!-- 心跳事件发送时间间隔（秒） -->
     <!-- <param name="event-heartbeat-interval" value="20"/> -->
 
-    <!--
-	Max number of sessions to allow at any given time.
-	
-	NOTICE: If you're driving 28 T1's in a single box you should set this to 644*2 or 1288
-	this will ensure you're able to use the entire DS3 without a problem.  Otherwise you'll
-	be 144 channels short of always filling that DS3 up which can translate into waste.
-    -->
+    <!-- 一定 sessions-per-second 时间内（秒），最大创建的会话数 -->
     <param name="max-sessions" value="1000"/>
-    <!--Most channels to create per second -->
+    <!-- 指定最大会话数，限定的时间（秒） -->
     <param name="sessions-per-second" value="30"/>
-    <!-- Default Global Log Level - value is one of debug,info,notice,warning,err,crit,alert -->
-    <param name="loglevel" value="debug"/>
+    <!-- 默认全局日志级别 Global Log Level - value is one of debug,info,notice,warning,err,crit,alert -->
+    <param name="loglevel" value="$${loglevel}"/>
 
-    <!-- Set the core DEBUG level (0-10) -->
+    <!-- 设置 core DEBUG 日志级别 level (0-10) -->
     <!-- <param name="debug-level" value="10"/> -->
 
-    <!-- SQL Buffer length within rage of 32k to 10m -->
+    <!-- 设置SQLbuffer 长度，区间 32k to 10m -->
     <!-- <param name="sql-buffer-len" value="1m"/> -->
-    <!-- Maximum SQL Buffer length must be greater than sql-buffer-len -->
+    <!-- 设置最大的SQL缓冲大小 -->
     <!-- <param name="max-sql-buffer-len" value="2m"/> -->
 
-    <!-- 
-	 The min-dtmf-duration specifies the minimum DTMF duration to use on 
-	 outgoing events. Events shorter than this will be increased in duration
-	 to match min_dtmf_duration. You cannot configure a dtmf duration on a 
-	 profile that is less than this setting. You may increase this value,
-	 but cannot set it lower than 400. This value cannot exceed 
-	 max-dtmf-duration. -->
+    <!-- 最小的DTMF按键时长，单位 ms -->
     <!-- <param name="min-dtmf-duration" value="400"/> -->
 
-    <!-- 
-	 The max-dtmf-duration caps the playout of a DTMF event at the specified
-	 duration. Events exceeding this duration will be truncated to this
-	 duration. You cannot configure a duration on a profile that exceeds
-	 this setting. This setting can be lowered, but cannot exceed 192000. 
-	 This setting cannot be set lower than min_dtmf_duration. -->
+    <!-- 最大的DTMF按键时长，单位 ms-->
     <!-- <param name="max-dtmf-duration" value="192000"/> -->
 
-    <!-- 
-	 The default_dtmf_duration specifies the DTMF duration to use on
-	 originated DTMF events or on events that are received without a
-	 duration specified. This value can be increased or lowered. This
-	 value is lower-bounded by min_dtmf_duration and upper-bounded by
-	 max-dtmf-duration\. -->
+    <!-- 默认的DTMF按键时长，收到事件 -->
     <!-- <param name="default-dtmf-duration" value="2000"/> -->
 
-    <!--
-	If you want to send out voicemail notifications via Windows you'll need to change the mailer-app
-	variable to the setting below:
-	
-	<param name="mailer-app" value="msmtp"/>
-	
-	Do not change mailer-app-args.
-	You will also need to download a sendmail clone for Windows (msmtp). This version works without issue:
-	http://msmtp.sourceforge.net/index.html. Download and copy the .exe to %winddir%\system32.
-	You'll need to create a small config file for smtp credentials (host name, authentication, tls, etc.) in
-	%USERPROFILE%\Application Data\ called "msmtprc.txt". Below is a sample copy of this file:
-	
-	###################################
-	# The SMTP server of the provider.
-	account provider
-	host smtp.myisp.com
-	from john@myisp.com
-	auth login
-	user johndoe
-	password mypassword
-	
-	# Set a default account
-	account default : provider
-	###################################
-	
-    -->    
-
+    <!-- 语音邮件相关配置 -->
     <param name="mailer-app" value="sendmail"/>
     <param name="mailer-app-args" value="-t"/>
-    <param name="dump-cores" value="yes"/>
+    <param name="dump-cores" value="false"/>
 
-    <!-- Enable verbose channel events to include every detail about a channel on every event  -->
+    <!-- 是否为通道事件，启用详细内容描述 -->
     <!-- <param name="verbose-channel-events" value="no"/> -->
 
-    <!-- Enable clock nanosleep -->
+    <!-- 是否启用纳秒时钟 -->
     <!-- <param name="enable-clock-nanosleep" value="true"/> -->
 
     <!-- Enable monotonic timing -->
@@ -150,35 +96,34 @@
     <param name="rtp-start-port" value="$${rtp-start-port}"/>
     <param name="rtp-end-port" value="$${rtp-end-port}"/>
 
-    <!-- Test each port to make sure it is not in use by some other process before allocating it to RTP -->
+    <!-- 在分配RTP端口之前测试端口没有被其他京东占用 -->
     <!-- <param name="rtp-port-usage-robustness" value="true"/> -->
 
+    <!-- RTP 是否启用 ZRTP 加密 -->
     <param name="rtp-enable-zrtp" value="false"/>
 
     <!-- 核心数据库配置 -->
+    <!-- 设置 PgSQL 数据库 -->
     <!-- <param name="core-db-dsn" value="pgsql://hostaddr=$${dbHost} dbname=$${dbName} user=$${dbUser} password='$${dbPwd}' options='-c client_min_messages=NOTICE'" /> -->
-    <!-- <param name="core-db-dsn" value="pgsql://hostaddr=127.0.0.1 dbname=freeswitch user=freeswitch password='' options='-c client_min_messages=NOTICE'" /> -->
-    <!-- <param name="core-db-dsn" value="postgresql://freeswitch:@127.0.0.1/freeswitch?options=-c%20client_min_messages%3DNOTICE" /> -->
-    
     <!-- 设置 mysql 或者 mariadb 数据库 -->
     <param name="core-db-dsn" value="mariadb://Server=$${dbHost};Port=$${dbPort};Database=$${dbName};Uid=$${dbUser};Pwd=$${dbPwd};" />
-    <!-- <param name="core-db-dsn" value="dsn:username:password" /> -->
-    <!-- 
-    Allow to specify the sqlite db at a different location (In this example, move it to ramdrive for
-    better performance on most linux distro (note, you loose the data if you reboot))
-    -->
-    <!-- <param name="core-db-name" value="/dev/shm/core.db" /> -->
 
-    <!-- The system will create all the db schemas automatically, set this to false to avoid this behaviour -->
+    <!-- <param name="core-db-dsn" value="dsn:username:password" /> -->
+    <!-- 如果是SQLite, 可以配置路径 -->
+    <!-- <param name="core-db-name" value="/dev/shm/core.db" /> -->
+    <!-- 核心数据库如果 MSSQL -->
+    <!-- <param name="core-dbtype" value="MSSQL"/> -->
+
+    <!-- 是自动创建数据库 schemas -->
     <!-- <param name="auto-create-schemas" value="true"/> -->
+
+    <!-- 自动清理事情 -->
     <!-- <param name="auto-clear-sql" value="true"/> -->
     <!-- <param name="enable-early-hangup" value="true"/> -->
 
-    <!-- <param name="core-dbtype" value="MSSQL"/> -->
-
-    <!-- Allow multiple registrations to the same account in the central registration table -->
+    <!-- 在registration中是否允许多次注册到同一账户 -->
     <!-- <param name="multiple-registrations" value="true"/> -->
-
+    <!-- 最大音频通道数 -->
     <!-- <param name="max-audio-channels" value="2"/> -->
 
   </settings>

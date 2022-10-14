@@ -609,7 +609,7 @@ done:
  */
 int check_sql_is_create_index(const char *sql)
 {
-	if (!switch_stristr("create index", sql)) { return 0; }
+	if (!switch_stristr("create index", sql) && !switch_stristr("create unique index", sql)) { return 0; }
 	return 1;
 }
 
