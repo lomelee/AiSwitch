@@ -35,4 +35,7 @@
 	<Z-PRE-PROCESS cmd="set" data="auth-realm=aiswitch" />
 	<Z-PRE-PROCESS cmd="set" data="auth-user=aiswitch" />
 	<Z-PRE-PROCESS cmd="set" data="auth-pass=long@123" /> -->
+
+	<!-- 默认全局日志级 Log Level - debug,info,notice,warning,err,crit,alert -->
+	<X-PRE-PROCESS cmd="set" data="loglevel=debug" />
 </include>
