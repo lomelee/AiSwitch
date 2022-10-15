@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <include>
   <context name="default">
-    <!-- 导入自定义的拨号计划 -->
-    <X-PRE-PROCESS cmd="include" data="custom-features/*.xml" />
 
     <extension name="unloop">
       <condition field="${unroll_loops}" expression="^true$" />
@@ -10,18 +8,18 @@
         <action application="deflect" data="${destination_number}" />
       </condition>
     </extension>
+    
+    <!-- 导入自定义的拨号计划 -->
+    <X-PRE-PROCESS cmd="include" data="custom-features/*.xml" />
     <!-- 加载示例 -->
     <!-- <Z-PRE-PROCESS cmd="include" data="default/00_example.xml" /> -->
 
-    <!-- 产生一个接通的应用消息 -->
-    <!-- <action application="acknowledge_call" /> -->
     <extension name="any_call">
       <condition field="destination_number" expression="^(.*)$">
         <action application="ring_ready" />
         <action application="playback" data="$${hold_music}" />
       </condition>
     </extension>
-
 
   </context>
 </include>
