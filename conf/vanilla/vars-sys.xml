@@ -30,12 +30,6 @@
 	<X-PRE-PROCESS cmd="set" data="dbPwd=xnjx@123!" />
 	<X-PRE-PROCESS cmd="set" data="dbTimeout=10" />
 
-	<!-- xml_rpc a simple webUi, X-PRE-PROCESS 不能直接注释，要修改前缀才有效-->
-	<!-- <Z-PRE-PROCESS cmd="set" data="http-port=21015" />
-	<Z-PRE-PROCESS cmd="set" data="auth-realm=aiswitch" />
-	<Z-PRE-PROCESS cmd="set" data="auth-user=aiswitch" />
-	<Z-PRE-PROCESS cmd="set" data="auth-pass=long@123" /> -->
-
 	<!-- 默认全局日志级 Log Level - debug,info,notice,warning,err,crit,alert -->
 	<X-PRE-PROCESS cmd="set" data="loglevel=debug" />
 </include>

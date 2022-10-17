@@ -33,7 +33,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install --no-in
     libopus-dev \
     # mod_mariadb (mariadb 和 mysql)
     libmariadb-dev \
-    # mod_pgsql
+    # mod_pgsql (postgreSQL)
     # libpq-dev \
     # mod_sndfile
     libsndfile1-dev libflac-dev libogg-dev libvorbis-dev \
