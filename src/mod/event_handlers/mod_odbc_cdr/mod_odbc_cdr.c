@@ -239,6 +239,7 @@ static switch_status_t odbc_cdr_reporting(switch_core_session_t *session)
 	const char *uuid = NULL;
 	int is_b;
 
+	// 当前通道是主叫通道
 	is_b = channel && switch_channel_get_originator_caller_profile(channel);
 
 	if (globals.log_leg == ODBC_CDR_LOG_A && is_b) {
@@ -326,7 +327,7 @@ static switch_status_t odbc_cdr_reporting(switch_core_session_t *session)
 						}
 
 						stream_field.write_function(&stream_field, "%q", field_hash_key);
-
+						// 配置了，[值]加引号
 						if (field_hash_val->quote) {
 							stream_value.write_function(&stream_value, "'%q'", tmp);
 						} else {
