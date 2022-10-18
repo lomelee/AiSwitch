@@ -59,8 +59,7 @@ applications/mod_voicemail
 #asr_tts/mod_cepstral
 #asr_tts/mod_flite
 #asr_tts/mod_pocketsphinx
-asr_tts/mod_tts_commandline
-asr_tts/mod_unimrcp
+#asr_tts/mod_tts_commandline
 codecs/mod_amr
 #codecs/mod_amrwb
 codecs/mod_b64
@@ -87,7 +86,6 @@ databases/mod_mariadb
 dialplans/mod_dialplan_xml
 #directories/mod_ldap
 #endpoints/mod_alsa
-#endpoints/mod_dingaling
 #endpoints/mod_gsmopen
 #endpoints/mod_h323
 #endpoints/mod_khomp
@@ -111,7 +109,7 @@ event_handlers/mod_event_socket
 #event_handlers/mod_format_cdr
 #event_handlers/mod_json_cdr
 #event_handlers/mod_radius_cdr
-event_handlers/mod_odbc_cdr
+#event_handlers/mod_odbc_cdr
 #event_handlers/mod_kazoo
 #event_handlers/mod_rayo
 #event_handlers/mod_smpp
@@ -164,7 +162,7 @@ say/mod_say_zh
 #timers/mod_posix_timer
 #timers/mod_timerfd
 #xml_int/mod_xml_cdr
-xml_int/mod_xml_curl
+#xml_int/mod_xml_curl
 #xml_int/mod_xml_ldap
 #xml_int/mod_xml_radius
 #xml_int/mod_xml_rpc

@@ -10,7 +10,7 @@ BGJOB=false
 VERBOSE=false
 BASEDIR=`pwd`;
 LIBDIR=${BASEDIR}/libs;
-SUBDIRS="apr libzrtp iksemel libdingaling srtp unimrcp fs";
+SUBDIRS="apr libzrtp iksemel srtp fs";
 
 while getopts 'jhd:v' o; do 
   case "$o" in
@@ -32,7 +32,7 @@ ex() {
 }
 
 setup_modules() {
-  # 每次修改 modules.conf.in 后，都要使 modules.conf 生效
+  # ÿ���޸� modules.conf.in �󣬶�Ҫʹ modules.conf ��Ч
   rm modules.conf -f
   if [ ! -f modules.conf ]; then 
     cp build/modules.conf.in modules.conf
@@ -172,9 +172,6 @@ bootstrap_apr() {
   # Remove autoconf 2.5x's cache directory
   rm -rf autom4te*.cache
 
-  echo "Entering directory ${LIBDIR}/apr-util"
-  cd ${LIBDIR}/apr-util
-  ./buildconf
 }
 
 bootstrap_libzrtp() {
