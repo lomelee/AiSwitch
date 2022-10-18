@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <document type="freeswitch/xml">
   <!-- 系统配置 -->
-  <!-- <Z-PRE-PROCESS cmd="include" data="vars-sys.xml"/> -->
   <X-PRE-PROCESS cmd="exec" data="wget -qO - http://192.168.2.10:6869/switch/config/sys/var">
 
   <!-- 加载默认的配置 -->

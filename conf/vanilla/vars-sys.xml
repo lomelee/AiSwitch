@@ -32,4 +32,7 @@
 
 	<!-- 默认全局日志级 Log Level - debug,info,notice,warning,err,crit,alert -->
 	<X-PRE-PROCESS cmd="set" data="loglevel=debug" />
+
+	<!-- 分机默认密码 -->
+    <X-PRE-PROCESS cmd="set" data="default_password=778811"/>
 </include>
