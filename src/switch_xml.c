@@ -1325,6 +1325,9 @@ static FILE *preprocess_exec(const char *cwd, const char *command, FILE *write_f
 #else
 	int fds[2], pid = 0;
 
+	switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_DEBUG, 
+					"Preprocess_exec cwd = %s , command = %s, rlevel = %d \n", cwd, command, rlevel);
+
 	if (pipe(fds)) {
 		goto end;
 	} else {					/* good to go */
@@ -1337,14 +1340,42 @@ static FILE *preprocess_exec(const char *cwd, const char *command, FILE *write_f
 		} else if (pid) {		/* parent */
 			char buf[1024] = "";
 			int bytes;
+			char ftemp_path[512] = "";
+			FILE *ftemp = NULL;			
 			close(fds[1]);
+			// 新增临时文件，存放临时数据，方便继续解析。						
+			// memset(ftemp_path, 0x00, 512);
+			sprintf(ftemp_path, "/../log/%s/wget_%05d.temp", cwd, rlevel);		
+			//创建一个用于读写的空文件
+			ftemp = fopen(ftemp_path, "w+");
+			// exsample 写入一行字符串
+			// fputs("这是 C 语言。", ftemp);
 			while ((bytes = read(fds[0], buf, sizeof(buf))) > 0) {
-				if (fwrite(buf, 1, bytes, write_fd) <= 0) {
+				// 写入临时文件
+				if (fwrite(buf, 1, bytes, ftemp) <= 0) {
 					break;
 				}
 			}
 			close(fds[0]);
+			fclose(ftemp);
 			waitpid(pid, NULL, 0);
+			// 重新解析文件中的内容
+			if (preprocess(cwd, ftemp_path, write_fd, rlevel) < 0) {
+				// 如果层次已经到达100层，则提示超过限制
+				if (rlevel > 100) {
+					switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, 
+						"Preprocess_exec Error including %s (Maximum recursion limit reached)\n", ftemp_path);
+				}
+			}
+			
+			// while ((bytes = read(fds[0], buf, sizeof(buf))) > 0) {
+			// 	if (fwrite(buf, 1, bytes, write_fd) <= 0) {
+			// 		break;
+			// 	}
+			// }
+			// close(fds[0]);
+			// waitpid(pid, NULL, 0);
+			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_INFO, "Preprocess_exec parent ==========> ftemp_path = %s \n", ftemp_path);
 		} else {				/*  child */
 			switch_close_extra_files(fds, 2);
 			close(fds[0]);

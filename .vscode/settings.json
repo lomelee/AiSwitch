@@ -12,6 +12,9 @@
         "type_traits": "c",
         "utility": "c",
         "switch_channel.h": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "cstdlib": "c",
+        "*.tcc": "c",
+        "fstream": "c"
     }
 }
