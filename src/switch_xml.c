@@ -63,7 +63,7 @@
 #include <glob.h>
 #else /* we're on windoze :( */
 /* glob functions at end of this file */
-#include <apr_file_io.h>
+#include <fspr_file_io.h>
 
 typedef struct {
 	size_t gl_pathc;			/* Count of total paths so far. */
@@ -795,7 +795,7 @@ static void switch_xml_proc_inst(switch_xml_root_t root, char *s, switch_size_t 
 		return;
 	}
 
-	if (!root->pi || !root->pi[0]) {
+	if (root->pi == (char ***)(SWITCH_XML_NIL) || !root->pi || !root->pi[0]) {
 		root->pi = (char ***) switch_must_malloc(sizeof(char **));
 		*(root->pi) = NULL;		/* first pi */
 	}
@@ -1257,7 +1257,7 @@ static char *expand_vars(char *buf, char *ebuf, switch_size_t elen, switch_size_
 	char *wp = ebuf;
 	char *ep = ebuf + elen - 1;
 
-	if (!(var = strstr(rp, "$${"))) {
+	if (!strstr(rp, "$${")) {
 		*newlen = strlen(buf);
 		return buf;
 	}
@@ -1325,9 +1325,6 @@ static FILE *preprocess_exec(const char *cwd, const char *command, FILE *write_f
 #else
 	int fds[2], pid = 0;
 
-	switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_DEBUG, 
-					"Preprocess_exec cwd = %s , command = %s, rlevel = %d \n", cwd, command, rlevel);
-
 	if (pipe(fds)) {
 		goto end;
 	} else {					/* good to go */
@@ -1340,44 +1337,14 @@ static FILE *preprocess_exec(const char *cwd, const char *command, FILE *write_f
 		} else if (pid) {		/* parent */
 			char buf[1024] = "";
 			int bytes;
-			char ftemp_path[512] = "";
-			FILE *ftemp = NULL;
-			long nowTime = switch_time_now();
 			close(fds[1]);
-			// 新增临时文件，存放临时数据，方便继续解析。						
-			// memset(ftemp_path, 0x00, 512);
-			sprintf(ftemp_path, "%s/../log/wget_%05d_%ld.temp", cwd, rlevel, nowTime);		
-			//创建一个用于读写的空文件
-			ftemp = fopen(ftemp_path, "w+");
-			// exsample 写入一行字符串
-			// fputs("这是 C 语言。", ftemp);
 			while ((bytes = read(fds[0], buf, sizeof(buf))) > 0) {
-				// 写入临时文件
-				if (fwrite(buf, 1, bytes, ftemp) <= 0) {
+				if (fwrite(buf, 1, bytes, write_fd) <= 0) {
 					break;
 				}
 			}
 			close(fds[0]);
-			fclose(ftemp);
 			waitpid(pid, NULL, 0);
-			// 重新解析文件中的内容
-			if (preprocess(cwd, ftemp_path, write_fd, rlevel) < 0) {
-				// 如果层次已经到达100层，则提示超过限制
-				if (rlevel > 100) {
-
-					switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, 
-						"Preprocess_exec Error including %s (Maximum recursion limit reached)\n", ftemp_path);
-				}
-			}
-
-			// while ((bytes = read(fds[0], buf, sizeof(buf))) > 0) {
-			// 	if (fwrite(buf, 1, bytes, write_fd) <= 0) {
-			// 		break;
-			// 	}
-			// }
-			// close(fds[0]);
-			// waitpid(pid, NULL, 0);
-			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_INFO, "Preprocess_exec parent ==========> ftemp_path = %s \n", ftemp_path);
 		} else {				/*  child */
 			switch_close_extra_files(fds, 2);
 			close(fds[0]);
@@ -3659,19 +3626,19 @@ static int glob2(char *pathbuf, char *pathend, char *pathend_last, char *pattern
 static int glob3(char *pathbuf, char *pathend, char *pathend_last, char *pattern, char *restpattern, glob_t *pglob, size_t *limit)
 {
 	int err;
-	apr_dir_t *dirp;
-	apr_pool_t *pool;
+	fspr_dir_t *dirp;
+	fspr_pool_t *pool;
 
-	apr_pool_create(&pool, NULL);
+	fspr_pool_create(&pool, NULL);
 
 	if (pathend > pathend_last)
 		return (GLOB_ABORTED);
 	*pathend = EOS;
 	errno = 0;
 
-	if (apr_dir_open(&dirp, pathbuf, pool) != APR_SUCCESS) {
+	if (fspr_dir_open(&dirp, pathbuf, pool) != APR_SUCCESS) {
 		/* TODO: don't call for ENOENT or ENOTDIR? */
-		apr_pool_destroy(pool);
+		fspr_pool_destroy(pool);
 		if (pglob->gl_errfunc) {
 			if (pglob->gl_errfunc(pathbuf, errno) || pglob->gl_flags & GLOB_ERR)
 				return (GLOB_ABORTED);
@@ -3683,11 +3650,11 @@ static int glob3(char *pathbuf, char *pathend, char *pathend_last, char *pattern
 
 	/* Search directory for matching names. */
 	while (dirp) {
-		apr_finfo_t dp;
+		fspr_finfo_t dp;
 		unsigned char *sc;
 		char *dc;
 
-		if (apr_dir_read(&dp, APR_FINFO_NAME, dirp) != APR_SUCCESS)
+		if (fspr_dir_read(&dp, APR_FINFO_NAME, dirp) != APR_SUCCESS)
 			break;
 		if (!(dp.valid & APR_FINFO_NAME) || !(dp.name) || !strlen(dp.name))
 			break;
@@ -3710,8 +3677,8 @@ static int glob3(char *pathbuf, char *pathend, char *pathend_last, char *pattern
 	}
 
 	if (dirp)
-		apr_dir_close(dirp);
-	apr_pool_destroy(pool);
+		fspr_dir_close(dirp);
+	fspr_pool_destroy(pool);
 	return (err);
 }
 

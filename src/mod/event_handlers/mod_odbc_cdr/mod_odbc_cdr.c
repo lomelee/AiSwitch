@@ -239,7 +239,6 @@ static switch_status_t odbc_cdr_reporting(switch_core_session_t *session)
 	const char *uuid = NULL;
 	int is_b;
 
-	// 当前通道是主叫通道
 	is_b = channel && switch_channel_get_originator_caller_profile(channel);
 
 	if (globals.log_leg == ODBC_CDR_LOG_A && is_b) {
@@ -294,15 +293,6 @@ static switch_status_t odbc_cdr_reporting(switch_core_session_t *session)
 				skip_leg = SWITCH_TRUE;
 			}
 
-			// switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(session), SWITCH_LOG_NOTICE, "all skip leg --------------> channel-name = %s, leg type = %d, is_b is %s\n",
-			//  switch_channel_get_name(channel),
-			//  table->log_leg, 
-			//  is_b ? "true" : "false");
-
-			// if (skip_leg == SWITCH_TRUE) {
-			// 	switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(session), SWITCH_LOG_NOTICE, "skip_leg ==============> %d, is_b is %s\n", table->log_leg, is_b ? "true" : "false");
-			// }
-			
 			if (skip_leg == SWITCH_FALSE) {
 				switch_hash_index_t *i_hi = NULL;
 				const void *i_var;
@@ -338,7 +328,6 @@ static switch_status_t odbc_cdr_reporting(switch_core_session_t *session)
 						stream_field.write_function(&stream_field, "%q", field_hash_key);
 
 						if (field_hash_val->quote) {
-							// 配置了，[值]加引号
 							stream_value.write_function(&stream_value, "'%q'", tmp);
 						} else {
 							stream_value.write_function(&stream_value, "%q", tmp);
