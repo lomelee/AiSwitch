@@ -72,4 +72,4 @@ RUN cd /usr/src/libs/mod_unimrcp && ./bootstrap.sh && ./configure && make && mak
 # 移动配置信息文件夹
 RUN mv /usr/local/freeswitch/conf /usr/local/freeswitch/.conf
 # copy phone music and sounds to fs dir files
-COPY sounds /usr/local/freeswitch/sounds
+COPY /usr/src/AiSwitch/sounds /usr/local/freeswitch/sounds
