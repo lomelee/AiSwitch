@@ -1,5 +1,5 @@
 #!/bin/sh
-apt-get update && apt-get -yq install git-core wget
+apt-get update && apt-get -yq install git-core wget tar
 
 git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch
 git clone https://github.com/signalwire/libks /usr/src/libs/libks
