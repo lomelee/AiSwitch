@@ -1,8 +1,10 @@
 FROM debian:bullseye AS FirstBuildStep
 LABEL Author="Allen lee"
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install git-core wget
+# 安装工具包
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install git-core wget tar 
 
+# 获取需要编译的依赖项目源码
 RUN git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch
 RUN git clone https://github.com/signalwire/libks /usr/src/libs/libks
 RUN git clone https://github.com/freeswitch/sofia-sip /usr/src/libs/sofia-sip
