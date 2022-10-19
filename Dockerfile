@@ -2,7 +2,7 @@ FROM debian:bullseye AS FirstBuildStep
 LABEL Author="Allen lee"
 
 # 安装工具包
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install git-core wget tar 
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install git-core wget 
 
 # 获取需要编译的依赖项目源码
 RUN git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch
@@ -56,8 +56,7 @@ RUN wget https://www.unimrcp.org/project/component-view/unimrcp-deps-1-6-0-tar-g
 RUN git clone https://github.com/unispeech/unimrcp.git /usr/src/libs/unimrcp
 RUN git clone https://github.com/freeswitch/mod_unimrcp.git /usr/src/libs/mod_unimrcp
 # unimrcp 依赖项编译
-RUN cd /usr/src/libs
-RUN tar xvzf unimrcp-deps-1.6.0.tar.gz
+RUN cd /usr/src/libs && tar -zxvf unimrcp-deps-1.6.0.tar.gz
 RUN cd /usr/src/libs/unimrcp-deps-1.6.0/libs/apr && ./configure --prefix=/usr/local/apr && make && make install
 # 如果编译后docker 无法运行或加载 mod_unimrcp 模块，那么设置安装目录到 /usr/lib下面 --prefix=/usr
 RUN cd /usr/src/libs/unimrcp-deps-1.6.0/libs/apr-util && ./configure --with-apr=/usr/src/libs/unimrcp-deps-1.6.0/libs/apr --prefix=/usr/local/apr && make && make install
@@ -71,5 +70,7 @@ RUN cd /usr/src/libs/mod_unimrcp && ./bootstrap.sh && ./configure && make && mak
 
 # 移动配置信息文件夹
 RUN mv /usr/local/freeswitch/conf /usr/local/freeswitch/.conf
+# 进入编译目录
+RUN cd /usr/src/AiSwitch
 # copy phone music and sounds to fs dir files
-COPY /usr/src/AiSwitch/sounds /usr/local/freeswitch/sounds
+COPY sounds /usr/local/freeswitch/sounds
