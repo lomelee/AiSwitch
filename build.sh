@@ -1,7 +1,5 @@
 #!/bin/sh
-
-
-apt-get update && apt-get -yq install git-core
+apt-get update && apt-get -yq install git-core wget
 
 git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch
 git clone https://github.com/signalwire/libks /usr/src/libs/libks
@@ -30,9 +28,8 @@ libshout3-dev libmpg123-dev libmp3lame-dev
 
 # build from source 
 cd /usr/src/libs/libks && cmake . -DCMAKE_INSTALL_PREFIX=/usr -DWITH_LIBBACKTRACE=1 && make install 
-cd /usr/src/libs/sofia-sip && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --with-glib=no --without-doxygen --disable-stun --prefix=/usr && make -j`nproc --all` && make install
+cd /usr/src/libs/sofia-sip && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --with-glib=no --without-doxygen --disable-stun --prefix=/usr/local && make -j`nproc --all` && make install
 cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --prefix=/usr && make -j`nproc --all` && make install
-
 # 编译前可以 make clean 一下， 获取直接 git clean -xfd 清空非版本控制的数据
 chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
 # mysql 或者 mariadb 也不需要 添加 --enable-core-odbc-support 参数支持
@@ -40,6 +37,25 @@ chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./
 # 添加pgsql驱动套件编译选项（PgSQL 不在需要 --enable-core-pgsql-support  参数，编译前需要 make clean 一下）
 # chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure --enable-core-pgsql-support && make -j`nproc` && make install
 # chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure --enable_core_pgsql-pkgconfig && make -j`nproc` && make install
+
+# 拉取mod_unimrcp 依赖项
+wget https://www.unimrcp.org/project/component-view/unimrcp-deps-1-6-0-tar-gz/download -O /usr/src/libs/unimrcp-deps-1.6.0.tar.gz
+# git clone -b unimrcp-1.7.0 https://github.com/unispeech/unimrcp.git /usr/src/libs/unimrcp
+git clone https://github.com/unispeech/unimrcp.git /usr/src/libs/unimrcp
+git clone https://github.com/freeswitch/mod_unimrcp.git /usr/src/libs/mod_unimrcp
+# unimrcp 依赖项编译
+cd /usr/src/libs
+tar xvzf unimrcp-deps-1.6.0.tar.gz
+cd /usr/src/libs/unimrcp-deps-1.6.0/libs/apr && ./configure --prefix=/usr/local/apr && make && make install
+# 如果编译后docker 无法运行或加载 mod_unimrcp 模块，那么设置安装目录到 /usr/lib下面 --prefix=/usr
+cd /usr/src/libs/unimrcp-deps-1.6.0/libs/apr-util && ./configure --with-apr=/usr/src/libs/unimrcp-deps-1.6.0/libs/apr --prefix=/usr/local/apr && make && make install
+# 如果编译后docker 无法运行或加载 mod_unimrcp 模块，那么设置安装目录到 /usr/lib下面 --prefix=/usr
+cd /usr/src/libs/unimrcp && ./bootstrap && ./configure --disable-client-app --disable-umc --disable-asr-client --disable-server-app --disable-server-lib --disable-demosynth-plugin --disable-demorecog-plugin --disable-demoverifier-plugin --disable-recorder-plugin --with-sofia-sip=/usr && make && make install
+# 设置 PKG_CONFIG_PATH，为编译 mod_unimrcp 模块准备（临时设置包搜索路径，在生效在当前shell session 中）
+export PKG_CONFIG_PATH=/usr/local/freeswitch/lib/pkgconfig:/usr/local/unimrcp/lib/pkgconfig
+# 编译 mod_unimrcp 模块
+cd /usr/src/libs/mod_unimrcp && ./bootstrap.sh && ./configure && make && make install
+# 移动配置
 mv /usr/local/freeswitch/conf /usr/local/freeswitch/.conf
 # copy phone music and sounds to fs dir files
 cp -R sounds /usr/local/freeswitch/sounds
