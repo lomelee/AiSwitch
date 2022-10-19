@@ -63,9 +63,8 @@ RUN cd /usr/src/libs/unimrcp-deps-1.6.0/libs/apr-util && ./configure --with-apr=
 # 如果编译后docker 无法运行或加载 mod_unimrcp 模块，那么设置安装目录到 /usr/lib下面 --prefix=/usr
 RUN cd /usr/src/libs/unimrcp && ./bootstrap && ./configure --disable-client-app --disable-umc --disable-asr-client --disable-server-app --disable-server-lib --disable-demosynth-plugin --disable-demorecog-plugin --disable-demoverifier-plugin --disable-recorder-plugin --with-sofia-sip=/usr && make && make install
 # 设置 PKG_CONFIG_PATH，为编译 mod_unimrcp 模块准备（临时设置包搜索路径，在生效在当前shell session 中）
-RUN export PKG_CONFIG_PATH=/usr/local/freeswitch/lib/pkgconfig:/usr/local/unimrcp/lib/pkgconfig
 # 编译 mod_unimrcp 模块
-RUN cd /usr/src/libs/mod_unimrcp && ./bootstrap.sh && ./configure && make && make install
+RUN export PKG_CONFIG_PATH=/usr/local/freeswitch/lib/pkgconfig:/usr/local/unimrcp/lib/pkgconfig && cd /usr/src/libs/mod_unimrcp && ./bootstrap.sh && ./configure && make && make install
 
 
 # 移动配置信息文件夹
