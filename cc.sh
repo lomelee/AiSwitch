@@ -3,8 +3,8 @@ cc_s=`cat cluecon_small.tmpl | sed 's/\\\\/\\\\\\\\/g' | awk '{printf "%s\\\\n",
 
 cat <<EOF > src/include/cc.h
 
-const char *cc = "$cc";
-const char *cc_s = "$cc_s";
+const char *cc = "AIS SWITCH\n";
+const char *cc_s = "";
 
 EOF
 

@@ -6,10 +6,6 @@
   <X-PRE-PROCESS cmd="set" data="default_dialect=cn"/>
   <X-PRE-PROCESS cmd="set" data="default_voice=link"/>
 
-  <!-- 设置默认的domain  -->
-  <X-PRE-PROCESS cmd="set" data="domain=$${local_ip_v4}"/>
-  <!-- 设置域名 -->
-  <X-PRE-PROCESS cmd="set" data="domain_name=$${domain}"/>
   <X-PRE-PROCESS cmd="set" data="hold_music=local_stream://moh"/>
   <X-PRE-PROCESS cmd="set" data="use_profile=external"/>
   <X-PRE-PROCESS cmd="set" data="rtp_sdes_suites=AEAD_AES_256_GCM_8|AEAD_AES_128_GCM_8|AES_CM_256_HMAC_SHA1_80|AES_CM_192_HMAC_SHA1_80|AES_CM_128_HMAC_SHA1_80|AES_CM_256_HMAC_SHA1_32|AES_CM_192_HMAC_SHA1_32|AES_CM_128_HMAC_SHA1_32|AES_CM_128_NULL_AUTH"/>
@@ -21,11 +17,6 @@
   <X-PRE-PROCESS cmd="set" data="global_codec_prefs=OPUS,G722,PCMU,PCMA,H264,VP8"/>
   <!-- 输出支持的编码类型 -->
   <X-PRE-PROCESS cmd="set" data="outbound_codec_prefs=OPUS,G722,PCMU,PCMA,H264,VP8"/>
-
-  <!-- 设置外网rtp IP -->
-  <X-PRE-PROCESS cmd="stun-set" data="external_rtp_ip=$${ext_ip}"/>
-  <!-- 设置外网sip IP -->
-  <X-PRE-PROCESS cmd="stun-set" data="external_sip_ip=$${ext_ip}"/>
 
   <!-- unroll-loops 用于打开 sip 环回展开 -->
   <X-PRE-PROCESS cmd="set" data="unroll_loops=true"/>

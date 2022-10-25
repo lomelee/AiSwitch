@@ -1341,11 +1341,12 @@ static FILE *preprocess_exec(const char *cwd, const char *command, FILE *write_f
 			char ftemp_path[512] = "";
 			FILE *ftemp = NULL;
 			long nowTime = switch_time_now();
-			close(fds[1]);
-
+			close(fds[1]);			
 			// 新增临时文件，存放临时数据，方便继续解析。						
 			// memset(ftemp_path, 0x00, 512);
-			sprintf(ftemp_path, "%s/../log/wget_%05d_%ld.temp", cwd, rlevel, nowTime);		
+			sprintf(ftemp_path, "%s/wget_%05d_%ld.temp", SWITCH_GLOBAL_dirs.log_dir, rlevel, nowTime);		
+			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_INFO, "preprocess_exec start read and write ftemp x-pre-cmd ==========> cwd = %s, \
+																					command = %s, ftemp_path = %s \n", cwd, command, ftemp_path);
 			//创建一个用于读写的空文件
 			ftemp = fopen(ftemp_path, "w+");
 			// exsample 写入一行字符串
@@ -1374,8 +1375,6 @@ static FILE *preprocess_exec(const char *cwd, const char *command, FILE *write_f
 						"Preprocess_exec Error including %s (Maximum recursion limit reached)\n", ftemp_path);
 				}
 			}
-			// 打印加载日志
-			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_INFO, "Preprocess_exec parent ==========> ftemp_path = %s \n", ftemp_path);
 		} else {				/*  child */
 			switch_close_extra_files(fds, 2);
 			close(fds[0]);
