@@ -587,9 +587,11 @@
     </extension> -->
 
   <!-- Send a 183 and send uk-ring as the ringtone. (early media) -->
+  <!-- {ignore_early_media=true} 无论 B 什么时候回复 183，都忽略， 意思是无论B什么时候回复彩铃都不听，只听FS自己播放给a-leg 的 ringback=$${uk-ring} 为彩铃音 -->
   <!-- <extension name="ringback_183_uk_ring">
       <condition field="destination_number" expression="^9181$">
         <action application="set" data="ringback=$${uk-ring}" />
+        
         <action application="bridge" data="{ignore_early_media=true}loopback/wait" />
       </condition>
     </extension> -->

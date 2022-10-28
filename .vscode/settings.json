@@ -2,6 +2,8 @@
     "C_Cpp.errorSquiggles": "Disabled",
     "search.useIgnoreFiles": true,
     "files.associations": {
+        "*.txml": "xml",
+        "*.fsxml": "xml",
         "array": "c",
         "compare": "c",
         "functional": "c",
@@ -15,6 +17,8 @@
         "typeinfo": "c",
         "cstdlib": "c",
         "*.tcc": "c",
-        "fstream": "c"
+        "fstream": "c",
+        "complex": "c",
+        "random": "c"
     }
 }

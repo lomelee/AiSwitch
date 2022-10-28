@@ -8,3 +8,10 @@ const char *cc_s = "";
 
 EOF
 
+cat <<EOF > libs/esl/src/include/cc.h
+
+const char *cc = "AIS SWITCH ESL\n";
+const char *cc_s = "";
+
+EOF
+
