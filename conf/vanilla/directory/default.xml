@@ -18,7 +18,7 @@
     <groups>
       <group name="default">
         <users>
-          <!-- 用户类型的网关（网关在不在同一个网络内，且没有公网IP，所以方向注册到FS） -->
+          <!-- 用户类型的网关（网关在不在同一个网络内，且没有公网IP，所以反向注册到FS） -->
           <X-PRE-PROCESS cmd="include" data="gateways/*.xml" />
           <!-- 默认用户 -->
           <X-PRE-PROCESS cmd="include" data="default/*.xml" />
@@ -31,7 +31,7 @@
 	      type="pointer" is a pointer so you can have the
 	      same user in multiple groups.  It basically means
 	      to keep searching for the user in the directory.
-	  -->
+	        -->
           <user id="1000" type="pointer" />
           <user id="1001" type="pointer" />
           <user id="1002" type="pointer" />
