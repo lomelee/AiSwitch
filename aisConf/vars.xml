@@ -1,0 +1,65 @@
+<include>
+  <!-- 声音文件目录前缀 -->
+  <X-PRE-PROCESS cmd="set" data="sound_prefix=$${sounds_dir}/zh/cn/link"/>
+  <!-- 语言配置，以下是中文配置 -->
+  <X-PRE-PROCESS cmd="set" data="default_language=zh"/>
+  <X-PRE-PROCESS cmd="set" data="default_dialect=cn"/>
+  <X-PRE-PROCESS cmd="set" data="default_voice=link"/>
+
+  <X-PRE-PROCESS cmd="set" data="hold_music=local_stream://moh"/>
+  <X-PRE-PROCESS cmd="set" data="use_profile=external"/>
+  <X-PRE-PROCESS cmd="set" data="rtp_sdes_suites=AEAD_AES_256_GCM_8|AEAD_AES_128_GCM_8|AES_CM_256_HMAC_SHA1_80|AES_CM_192_HMAC_SHA1_80|AES_CM_128_HMAC_SHA1_80|AES_CM_256_HMAC_SHA1_32|AES_CM_192_HMAC_SHA1_32|AES_CM_128_HMAC_SHA1_32|AES_CM_128_NULL_AUTH"/>
+
+  <!-- 是否启用 ZRTP 加密媒体流， ZRTP协议运用"随机加密"，这就意味着RTP流（视频/音频）不用担心安全问题 -->
+  <X-PRE-PROCESS cmd="set" data="zrtp_secure_media=true"/>
+
+  <!-- 全局编码类型 -->
+  <X-PRE-PROCESS cmd="set" data="global_codec_prefs=OPUS,G722,PCMU,PCMA,H264,VP8"/>
+  <!-- 输出支持的编码类型 -->
+  <X-PRE-PROCESS cmd="set" data="outbound_codec_prefs=OPUS,G722,PCMU,PCMA,H264,VP8"/>
+
+  <!-- unroll-loops 用于打开 sip 环回展开 -->
+  <X-PRE-PROCESS cmd="set" data="unroll_loops=true"/>
+
+  <!-- outbound_caller_id 和 outbound_caller_name 外呼变号，conference.conf.xml 和 directory 中默认用户配置 -->
+  <X-PRE-PROCESS cmd="set" data="outbound_caller_name=AiSwitch"/>
+  <X-PRE-PROCESS cmd="set" data="outbound_caller_id=0000000000"/>
+
+  <!-- 调试日志等默认值 -->
+  <X-PRE-PROCESS cmd="set" data="call_debug=false"/>
+  <X-PRE-PROCESS cmd="set" data="console_loglevel=debug"/>
+  <X-PRE-PROCESS cmd="set" data="default_areacode=918"/>
+  <X-PRE-PROCESS cmd="set" data="default_country=US"/>
+
+  <!-- 如果为 false 或未定义，则目标号码包含在存在 NOTIFY dm:note 中。 如果为true，则不包括目的地号码 -->
+  <X-PRE-PROCESS cmd="set" data="presence_privacy=false"/>
+
+  <!-- sip 开启 openssl 相关协议 -->
+  <X-PRE-PROCESS cmd="set" data="sip_tls_version=tlsv1,tlsv1.1,tlsv1.2"/>
+  <!-- sip 开启 openssl 相关协议 -->
+  <X-PRE-PROCESS cmd="set" data="sip_tls_ciphers=ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"/>
+
+  <!-- Internal SIP Profile -->
+  <X-PRE-PROCESS cmd="set" data="internal_auth_calls=true"/>
+  <X-PRE-PROCESS cmd="set" data="internal_ssl_enable=false"/>
+
+  <!-- External SIP Profile -->
+  <X-PRE-PROCESS cmd="set" data="external_auth_calls=false"/>
+  <X-PRE-PROCESS cmd="set" data="external_ssl_enable=false"/>
+
+  <!-- Video 相关设置 -->
+  <!-- 设置最大带宽 -->
+  <X-PRE-PROCESS cmd="set" data="rtp_video_max_bandwidth_in=3mb"/>
+  <X-PRE-PROCESS cmd="set" data="rtp_video_max_bandwidth_out=3mb"/>
+
+  <!-- WebRTC Video 相关设置 -->
+  <!-- Suppress CNG for WebRTC Audio -->
+  <X-PRE-PROCESS cmd="set" data="suppress_cng=true"/>
+  <!-- Enable liberal DTMF for those that can't get it right -->
+  <X-PRE-PROCESS cmd="set" data="rtp_liberal_dtmf=true"/>
+
+  <!-- Stock Video Avatars -->
+  <X-PRE-PROCESS cmd="set" data="video_mute_png=$${images_dir}/default-mute.png"/>
+  <X-PRE-PROCESS cmd="set" data="video_no_avatar_png=$${images_dir}/default-avatar.png"/>
+
+</include>

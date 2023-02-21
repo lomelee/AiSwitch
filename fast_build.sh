@@ -13,7 +13,13 @@ cd /usr/src/libs/mod_unimrcp && ./bootstrap.sh && ./configure && make && make in
 # 移动配置
 # mv /usr/local/freeswitch/conf /usr/local/freeswitch/.conf
 # copy phone music and sounds to fs dir files
-cp -R /usr/src/AiSwitch/sounds /usr/local/freeswitch/sounds
+# cp -R /usr/src/AiSwitch/sounds /usr/local/freeswitch/sounds
+
+# 删除默认配置
+rm /usr/local/freeswitch/conf -rf
+# 添加软链接
+ln -sf /usr/src/AiSwitch/aisConf /usr/local/freeswitch/conf
+ln -sf /usr/src/AiSwitch/sounds /usr/local/freeswitch/sounds
 
 
 # 增加软连接

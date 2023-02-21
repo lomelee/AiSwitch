@@ -1405,10 +1405,10 @@ static FILE *preprocess_exec_config(const char *cwd, const char *command, FILE *
 			char ftemp_path[512] = "";
 			FILE *ftemp = NULL;
 			long nowTime = switch_time_now();
-			close(fds[1]);			
-			// 新增临时文件，存放临时数据，方便继续解析。						
+			close(fds[1]);
+			// 新增临时文件，存放临时数据，方便继续解析。
 			// memset(ftemp_path, 0x00, 512);
-			sprintf(ftemp_path, "%s/config_%05d_%ld.txml", SWITCH_GLOBAL_dirs.log_dir, rlevel, nowTime);		
+			sprintf(ftemp_path, "%s/config_%05d_%ld.txml", SWITCH_GLOBAL_dirs.log_dir, rlevel, nowTime);
 			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_INFO, "preprocess_exec_config start read and write ftemp x-pre-cmd ==========> cwd = %s, \
 																					command = %s, ftemp_path = %s \n", cwd, command, ftemp_path);
 			//创建一个用于读写的空文件
@@ -1424,7 +1424,7 @@ static FILE *preprocess_exec_config(const char *cwd, const char *command, FILE *
 			// 关闭文件流
 			fclose(ftemp);
 
-			// while ((bytes = read(fds[0], buf, sizeof(buf))) > 0) {
+			// while ((bytes = rea(fds[0], buf, sizeof(buf))) > 0) {
 			// 	if (fwrite(buf, 1, bytes, write_fd) <= 0) {
 			// 		break;
 			// 	}

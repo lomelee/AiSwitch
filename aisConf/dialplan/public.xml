@@ -1,0 +1,25 @@
+<include>
+  <context name="public">
+    <extension name="unloop">
+      <condition field="${unroll_loops}" expression="^true$" />
+      <condition field="${sip_looped_call}" expression="^true$">
+        <action application="deflect" data="${destination_number}" />
+      </condition>
+    </extension>
+    <!-- 任何呼叫都处理，设置 outside_call = true -->
+    <extension name="any_outside_call" continue="true">
+      <condition>
+        <action application="set" data="outside_call=true" />
+        <action application="export" data="RFC2822_DATE=${strftime(%a, %d %b %Y %T %z)}" />
+      </condition>
+    </extension>
+
+    <extension name="call_debug" continue="true">
+      <condition field="${call_debug}" expression="^true$" break="never">
+        <action application="info" />
+      </condition>
+    </extension>
+
+    <!-- <Z-PRE-PROCESS cmd="include" data="public/*.xml" /> -->
+  </context>
+</include>
