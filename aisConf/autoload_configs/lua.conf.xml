@@ -7,6 +7,8 @@
     -->
     <!-- <param name="module-directory" value="/usr/lib/lua/5.1/?.so"/> -->
     <!-- <param name="module-directory" value="/usr/local/lib/lua/5.1/?.so"/> -->
+    <!-- 自定义 LUA_CPATH 环境变量，优先加载 -->
+    <param name="module-directory" value="$${script_dir}/?.lua"/>
 
     <!-- 
     Specify local directories that will be searched for LUA scripts
