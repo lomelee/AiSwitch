@@ -134,12 +134,16 @@
       <param name="rate" value="8000"/>
       <!-- <param name="channels" value="1"/> -->
       <param name="interval" value="20"/>
+      <!-- 将音频发送给其他用户的 音量大小（等级） -->
       <param name="energy-level" value="200"/>
       <param name="auto-gain-level" value="false"/>
+      <!-- 最大成员数量 -->
       <param name="max-members" value="20"/>
-      <param name="terminate-on-silence" value="120"/>
+      <!-- 静音3600秒挂断 -->
+      <param name="terminate-on-silence" value="3600"/>
       <param name="caller-id-name" value="$${outbound_caller_name}"/>
       <param name="caller-id-number" value="$${outbound_caller_id}"/>
+      <!-- 启用舒适噪音生成(降噪) -->
       <param name="comfort-noise" value="true"/>
     </profile>
 
