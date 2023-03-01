@@ -1,6 +1,8 @@
 FROM debian:bullseye AS FirstBuildStep
 LABEL Author="Allen lee"
 
+# 修改debian镜像源
+# RUN sed -i s/deb.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list 
 # 安装工具包
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install git-core wget 
 

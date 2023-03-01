@@ -6,8 +6,8 @@
     <room name="3001@$${domain}" status="FreeSWITCH"/>
   </advertise>
 
-  <!-- These are the default keys that map when you do not specify a caller control group -->	
-  <!-- Note: none and default are reserved names for group names.  Disabled if dist-dtmf member flag is set. -->	
+  <!-- These are the default keys that map when you do not specify a caller control group -->
+  <!-- Note: none and default are reserved names for group names.  Disabled if dist-dtmf member flag is set. -->
   <caller-controls>
     <group name="default">
       <control action="mute" digits="0"/>
@@ -47,7 +47,7 @@
 
       <!--Can be | delim of waste|mute|deaf|dist-dtmf waste will always transmit data to each channel
           even during silence.  dist-dtmf propagates dtmfs to all other members, but channel controls
-	  via dtmf will be disabled. -->
+	        via dtmf will be disabled. -->
       <!-- <param name="member-flags" value="waste"/> -->
 
       <!-- Name of the caller control group to use for this profile -->
@@ -126,6 +126,20 @@
       <!-- <param name="conference-flags" value="audio-always"/> -->
       <!-- Allow live array sync for Verto -->
       <!-- <param name="conference-flags" value="livearray-sync"/> -->
+    </profile>
+    <!-- 自定义会议配置 -->
+    <profile name="PrisonConfig">
+      <param name="domain" value="$${domain}"/>
+      <param name="rate" value="8000"/>
+      <param name="channels" value="1"/>
+      <param name="interval" value="20"/>
+      <param name="energy-level" value="200"/>
+      <param name="auto-gain-level" value="false"/>
+      <param name="max-members" value="20"/>
+      <param name="terminate-on-silence" value="120"/>
+      <param name="caller-id-name" value="$${outbound_caller_name}"/>
+      <param name="caller-id-number" value="$${outbound_caller_id}"/>
+      <param name="comfort-noise" value="true"/>
     </profile>
 
     <profile name="wideband">

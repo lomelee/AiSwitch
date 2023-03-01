@@ -26,7 +26,7 @@
 	You can define multiple lines, one for each script you 
 	need to run.
     -->
-    <!--<param name="startup-script" value="startup_script_1.lua"/>-->
+    <param name="startup-script" value="timestamp.lua"/>    
     <!--<param name="startup-script" value="startup_script_2.lua"/>-->
     
     <!--<hook event="CUSTOM" subclass="conference::maintenance" script="catch-event.lua"/>-->
