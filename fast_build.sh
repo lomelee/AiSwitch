@@ -6,7 +6,7 @@ git clean -xfd
 # 编译前可以 make clean 一下， 获取直接 git clean -xfd 清空非版本控制的数据
 cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
 
-# 设置 PKG_CONFIG_PATH，为编译 mod_unimrcp 模块准备（临时设置包搜索路径，在生效在当前shell session 中）
+# 设置 PKG_CONFIG_PATH，为编译 mod_unimrcp 模块准备（临时设置包搜索路径，只生效在当前shell session 中）
 export PKG_CONFIG_PATH=/usr/local/freeswitch/lib/pkgconfig:/usr/local/unimrcp/lib/pkgconfig
 # 编译 mod_unimrcp 模块
 cd /usr/src/libs/mod_unimrcp && ./bootstrap.sh && ./configure && make && make install

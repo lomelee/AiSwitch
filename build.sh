@@ -1,4 +1,6 @@
 #!/bin/sh
+#设置sources镜像（本机设置了清华大学镜像）
+# sed -i s/deb.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list 
 apt-get update && apt-get -yq install git-core wget
 
 git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch
@@ -23,7 +25,9 @@ libmariadb-dev \
 # PgSQL 模块编译依赖
 # libpq-dev \
 libsndfile1-dev libflac-dev libogg-dev libvorbis-dev \
-libshout3-dev libmpg123-dev libmp3lame-dev 
+libshout3-dev libmpg123-dev libmp3lame-dev \
+# conference 会议中需要
+libpng-dev 
 
 
 # build from source 

@@ -42,7 +42,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install --no-in
     # mod_sndfile
     libsndfile1-dev libflac-dev libogg-dev libvorbis-dev \
     # mod_shout(mp3)
-    libshout3-dev libmpg123-dev libmp3lame-dev 
+    libshout3-dev libmpg123-dev libmp3lame-dev \
+    # conference 会议中需要
+    libpng-dev 
 
 
 # build from source 
