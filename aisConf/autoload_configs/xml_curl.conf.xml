@@ -2,7 +2,10 @@
   <bindings>
     <!-- 拨号计划配置 -->
     <binding name="dialplan_configs">
+      <!-- 定义请求拨号计划的连接地址 -->
       <param name="gateway-url" value="http://$${web_config_url}/switch/dial/plan" bindings="dialplan"/>
+      <!-- 定义超时时间 -->
+      <param name="timeout" value="20"/>
     </binding>
   </bindings>
 </configuration>

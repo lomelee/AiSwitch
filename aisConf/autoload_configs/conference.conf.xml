@@ -10,7 +10,8 @@
   <!-- Note: none and default are reserved names for group names.  Disabled if dist-dtmf member flag is set. -->
   <caller-controls>
     <group name="default">
-      <control action="mute" digits="0"/>
+      <!-- 取消会议功能键 -->
+      <!-- <control action="mute" digits="0"/>
       <control action="deaf mute" digits="*"/>
       <control action="energy up" digits="9"/>
       <control action="energy equ" digits="8"/>
@@ -21,7 +22,7 @@
       <control action="vol listen up" digits="6"/>
       <control action="vol listen zero" digits="5"/>
       <control action="vol listen dn" digits="4"/>
-      <control action="hangup" digits="#"/>
+      <control action="hangup" digits="#"/> -->
     </group>
   </caller-controls>
 
