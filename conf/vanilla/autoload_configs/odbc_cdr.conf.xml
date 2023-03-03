@@ -16,6 +16,9 @@
   <tables>
     <!-- 自定义 calls list db table -->
     <table name="calls_list" log-leg="a-leg">
+      <field name="fuuid" chan-var-name="fuuid"/>
+      <field name="record_file_name" chan-var-name="record_file_name"/>
+      <field name="record_leg_name" chan-var-name="record_leg_name"/>
       <field name="core_uuid" chan-var-name="Core-UUID"/>
       <field name="call_uuid" chan-var-name="call_uuid"/>
       <field name="aleg_uuid" chan-var-name="uuid"/>
