@@ -301,8 +301,6 @@ SWITCH_DECLARE(void) switch_channel_perform_set_callstate(switch_channel_t *chan
 		switch_event_add_header_string(event, SWITCH_STACK_BOTTOM, "Original-Channel-Call-State", switch_channel_callstate2str(o_callstate));
 		switch_event_add_header(event, SWITCH_STACK_BOTTOM, "Channel-Call-State-Number", "%d", callstate);
 		switch_channel_event_set_data(channel, event);
-		// 添加扩展参数
-		switch_channel_get_scope_variables_with_event(channel, event)
 		switch_event_fire(&event);
 	}
 }
@@ -968,31 +966,6 @@ SWITCH_DECLARE(switch_status_t) switch_channel_get_scope_variables(switch_channe
 	}
 	switch_mutex_unlock(channel->profile_mutex);
 
-	return status;
-}
-
-/**
- * @brief 获取通道扩展参数
- * Author lixl@2023-03-14
- */
-SWITCH_DECLARE(switch_status_t) switch_channel_get_scope_variables_with_event(switch_channel_t *channel, switch_event_t *event)
-{
-	switch_status_t status = SWITCH_STATUS_FALSE;
-	switch_mutex_lock(channel->profile_mutex);
-	if (channel->scope_variables) {
-		switch_event_t *ep;
-		switch_event_header_t *hp;
-		status = SWITCH_STATUS_SUCCESS;
-
-		for (ep = channel->scope_variables; ep; ep = ep->next) {
-			for (hp = ep->headers; hp; hp = hp->next) {
-				if (!switch_event_get_header(event, hp->value)) {
-					switch_event_add_header_string(event, SWITCH_STACK_BOTTOM, hp->name, hp->value);
-				}
-			}
-		}
-	}
-	switch_mutex_unlock(channel->profile_mutex);
 	return status;
 }
 
@@ -2804,6 +2777,8 @@ SWITCH_DECLARE(void) switch_channel_event_set_extended_data(switch_channel_t *ch
 		event->event_id == SWITCH_EVENT_CHANNEL_HOLD || 
 		event->event_id == SWITCH_EVENT_CHANNEL_UNHOLD || 
 		event->event_id == SWITCH_EVENT_TEXT || 
+		event->event_id == SWITCH_EVENT_CHANNEL_STATE || 
+		event->event_id == SWITCH_EVENT_CHANNEL_CALLSTATE || 
 		event->event_id == SWITCH_EVENT_CUSTOM) {
 
 		/* Index Variables */
