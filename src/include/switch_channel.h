@@ -315,6 +315,7 @@ SWITCH_DECLARE(switch_status_t) switch_channel_export_variable_printf(switch_cha
 
 SWITCH_DECLARE(void) switch_channel_set_scope_variables(switch_channel_t *channel, switch_event_t **event);
 SWITCH_DECLARE(switch_status_t) switch_channel_get_scope_variables(switch_channel_t *channel, switch_event_t **event);
+SWITCH_DECLARE(switch_status_t) switch_channel_get_scope_variables_with_event(switch_channel_t *channel, switch_event_t *event)
 
 /*!
   \brief Retrieve a variable from a given channel

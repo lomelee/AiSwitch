@@ -3,7 +3,7 @@
 
     <!-- esl 连接策略 -->
     <list name="esl" default="allow">
-      <node cidr="192.168.0.0/16"/>
+      <node type="allow" cidr="192.168.0.0/16"/>
     </list>
 
     <!--
