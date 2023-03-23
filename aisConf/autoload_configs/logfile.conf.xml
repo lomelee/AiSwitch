@@ -14,7 +14,7 @@
         <!-- If this parameter is enabled, the log filenames will not include a date stamp -->
         <param name="maximum-rotate" value="32"/>
         <!-- Prefix all log lines by the session's uuid  -->
-        <param name="uuid" value="true" />
+        <param name="uuid" value="false" />
       </settings>
       <mappings>
         <!-- 
