@@ -1,21 +1,18 @@
 MK=`echo $(MAKE) | $(AWK) '{printf "%5s\n", $$0}' `
 
 all:
-	@echo " +---------- FreeSWITCH Build Complete ----------+"
-	@echo " + FreeSWITCH has been successfully built.       +"
-	@echo " + Install by running:                           +"
+	@echo " +---------- AISWITCH Build Complete ------------+"
+	@echo " +   AISWITCH has been successfully built.       +"
+	@echo " +   Install by running:                         +"
 	@echo " +                                               +"
 	@echo " +               $(MK) install                   +"
 	@echo " +                                               +"
-	@echo " + While you're waiting, register for ClueCon!   +"
-	@echo " + https://www.cluecon.com                       +"
 	@echo " +                                               +"
 	@echo " +-----------------------------------------------+"
-	@cat $(switch_srcdir)/cluecon2.tmpl
 
 install:
-	@echo " +---------- FreeSWITCH install Complete ----------+"
-	@echo " + FreeSWITCH has been successfully installed.     +"
+	@echo " +---------- AISWITCH   install Complete ----------+"
+	@echo " +     AISWITCH has been successfully installed.   +"
 	@echo " +                                                 +"
 	@echo " +       Install sounds:                           +"
 	@echo " +       (uhd-sounds includes hd-sounds, sounds)   +"
@@ -57,20 +54,8 @@ install:
 	@echo " +                                                 +"
 	@echo " +                                                 +"
 	@echo " +       Additional resources:                     +"
-	@echo " +       ----------------------------------        +"
-	@echo " +       https://www.freeswitch.org                +"
-	@echo " +       https://freeswitch.org/confluence         +"
-	@echo " +       https://freeswitch.org/jira               +"
-	@echo " +       http://lists.freeswitch.org               +"
-	@echo " +                                                 +"
-	@echo " +       irc.freenode.net / #freeswitch            +"
-	@echo " +                                                 +"
-	@echo " +       Register For ClueCon:                     +"
-	@echo " +       ----------------------------------        +"
-	@echo " +       https://www.cluecon.com                   +"
 	@echo " +                                                 +"
 	@echo " +-------------------------------------------------+"
-	@cat $(switch_srcdir)/cluecon2.tmpl
 	@sh $(switch_srcdir)/build/modcheck.sh $(DESTDIR)$(modulesdir)
 
 .PHONY: check dvi html info install-data \
