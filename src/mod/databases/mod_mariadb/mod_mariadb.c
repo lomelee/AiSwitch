@@ -110,7 +110,7 @@ static int wait_for_mysql(mariadb_handle_t *handle, int status, int msec)
 	/*
 	On Windows, select() must be used due to a bug in WSAPoll()
 	which is supposed to be identical to BSD's poll(), but it is not,
-	"Windows 8 Bugs 309411 � WSAPoll does not report failed connections":
+	"Windows 8 Bugs 309411 � WSAPoll does not report failed connections":
 	https://social.msdn.microsoft.com/Forums/windowsdesktop/en-US/18769abd-fca0-4d3c-9884-1a38ce27ae90/wsapoll-and-nonblocking-connects-to-nonexistent-ports?forum=wsk
 	*/
 
@@ -623,24 +623,10 @@ done:
 	return SWITCH_STATUS_SUCCESS;
 }
 
-/**
- * @brief 检查是否是创建索引的SQL
- *
- * @param sql 需要检查的SQL
- * @return int 返回 是否设计 创建索引
- */
-int check_sql_is_create_index(const char *sql)
-{
-	if (!switch_stristr("create index", sql) && !switch_stristr("create unique index", sql)) { return 0; }
-	return 1;
-}
-
 switch_status_t mariadb_send_query(mariadb_handle_t *handle, const char* sql)
 {
 	char *err_str;
 	int ret;
-
-	int ret_check = check_sql_is_create_index(sql);
 
 	switch_safe_free(handle->sql);
 	handle->sql = strdup(sql);
@@ -648,10 +634,7 @@ switch_status_t mariadb_send_query(mariadb_handle_t *handle, const char* sql)
 	ret = mysql_real_query(&handle->con, sql, (unsigned long)strlen(sql));	
 	if (ret) {
 		err_str = mariadb_handle_get_error(handle);
-		// 如果不是创建索引，或者是创建索引且索引重复的错误，这不打印错误消息
-		if (0 == ret_check || (1 == ret_check && !switch_stristr("duplicate key name", err_str))) {
-			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_CRIT, "Failed to send query (%s) to database: %s\n", sql, err_str);
-		}
+		switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_CRIT, "Failed to send query (%s) to database: %s\n", sql, err_str);
 		switch_safe_free(err_str);
 		mariadb_finish_results(handle);
 		goto error;

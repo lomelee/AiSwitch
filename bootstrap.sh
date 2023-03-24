@@ -10,7 +10,7 @@ BGJOB=false
 VERBOSE=false
 BASEDIR=`pwd`;
 LIBDIR=${BASEDIR}/libs;
-SUBDIRS="apr libzrtp iksemel srtp fs";
+SUBDIRS="apr iksemel srtp fs";
 
 while getopts 'jhd:v' o; do 
   case "$o" in
@@ -32,8 +32,6 @@ ex() {
 }
 
 setup_modules() {
-  # 每次修改 modules.conf.in 后，都要使 modules.conf 生效
-  rm modules.conf -f
   if [ ! -f modules.conf ]; then 
     cp build/modules.conf.in modules.conf
   fi
@@ -174,10 +172,6 @@ bootstrap_apr() {
 
 }
 
-bootstrap_libzrtp() {
-  (cd ${LIBDIR}/libzrtp && ./bootstrap.sh)
-}
-
 # Libs automake automation function
 libbootstrap() {
   i=$1
@@ -262,7 +256,7 @@ bootstrap_libs_post() {
 bootstrap_libs() {
   for i in ${SUBDIRS}; do
     case "$i" in
-      apr|fs|libzrtp)
+      apr|fs)
         ${BGJOB} && wait
         bootstrap_$i
         continue

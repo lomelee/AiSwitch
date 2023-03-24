@@ -2436,14 +2436,13 @@ int sofia_glue_init_sql(sofia_profile_t *profile)
 {
 	char *test_sql = NULL;
 
-	// contact 修改从VARCHAR(1024) 到 VARCHAR(768) 保证 mysql 创建索引成功
 	char reg_sql[] =
 		"CREATE TABLE sip_registrations (\n"
 		"   call_id          VARCHAR(255),\n"
 		"   sip_user         VARCHAR(255),\n"
 		"   sip_host         VARCHAR(255),\n"
 		"   presence_hosts   VARCHAR(255),\n"
-		"   contact          VARCHAR(768),\n"
+		"   contact          VARCHAR(1024),\n"
 		"   status           VARCHAR(255),\n"
 		"   ping_status      VARCHAR(255),\n"
 		"   ping_count       INTEGER,\n"
@@ -2510,8 +2509,7 @@ int sofia_glue_init_sql(sofia_profile_t *profile)
 		"   sip_from_tag    VARCHAR(255),\n"
 		"   rcd             INTEGER not null default 0\n"
 		");\n";
-	
-	// contact 修改从VARCHAR(1024) 到 VARCHAR(768) 保证 mysql 创建索引成功
+
 	char sub_sql[] =
 		"CREATE TABLE sip_subscriptions (\n"
 		"   proto           VARCHAR(255),\n"
@@ -2521,7 +2519,7 @@ int sofia_glue_init_sql(sofia_profile_t *profile)
 		"   sub_to_host     VARCHAR(255),\n"
 		"   presence_hosts  VARCHAR(255),\n"
 		"   event           VARCHAR(255),\n"
-		"   contact         VARCHAR(768),\n"
+		"   contact         VARCHAR(1024),\n"
 		"   call_id         VARCHAR(255),\n"
 		"   full_from       VARCHAR(255),\n"
 		"   full_via        VARCHAR(255),\n"

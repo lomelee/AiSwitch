@@ -2,14 +2,14 @@
   <settings>
     <!-- 'cdr-csv' will always be appended to log-base -->
     <!--<param name="log-base" value="/var/log"/>-->
-    <param name="default-template" value="example" />
+    <param name="default-template" value="example"/>
     <!-- This is like the info app but after the call is hung up -->
     <!--<param name="debug" value="true"/>-->
-    <param name="rotate-on-hup" value="true" />
+    <param name="rotate-on-hup" value="true"/>
     <!-- may be a b or ab -->
-    <param name="legs" value="a" />
-    <!-- Only log in Master.csv -->
-    <!-- <param name="master-file-only" value="true"/> -->
+    <param name="legs" value="a"/>
+	<!-- Only log in Master.csv -->
+	<!-- <param name="master-file-only" value="true"/> -->
   </settings>
   <templates>
     <template name="sql">INSERT INTO cdr VALUES ("${caller_id_name}","${caller_id_number}","${destination_number}","${context}","${start_stamp}","${answer_stamp}","${end_stamp}","${duration}","${billsec}","${hangup_cause}","${uuid}","${bleg_uuid}", "${accountcode}");</template>
@@ -20,3 +20,4 @@
     <template name="opencdrrate">"${uuid}","${signal_bond}","${direction}","${ani}","${destination_number}","${answer_stamp}","${end_stamp}","${billsec}","${accountcode}","${userfield}","${network_addr}","${regex('${original_caller_id_name}'|^.)}","${sip_gateway_name}"</template>
   </templates>
 </configuration>
+
