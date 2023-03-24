@@ -1042,7 +1042,7 @@ static const char *basic_gets(int *cnt)
 	return command_buf;
 }
 
-static const char *banner = "\n"
+static const char *banner = "\n";
 
 static const char *inf = "Type /help <enter> to see a list of commands\n\n\n";
 
