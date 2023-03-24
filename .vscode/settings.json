@@ -1,0 +1,28 @@
+{
+    "C_Cpp.errorSquiggles": "Disabled",
+    "search.useIgnoreFiles": true,
+    "files.associations": {
+        "*.txml": "xml",
+        "*.fsxml": "xml",
+        "array": "c",
+        "compare": "c",
+        "functional": "c",
+        "istream": "c",
+        "ostream": "c",
+        "ranges": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "switch_channel.h": "c",
+        "typeinfo": "c",
+        "cstdlib": "c",
+        "*.tcc": "c",
+        "fstream": "c",
+        "complex": "c",
+        "random": "c",
+        "string": "c",
+        "string_view": "c",
+        "optional": "c",
+        "system_error": "c"
+    }
+}
