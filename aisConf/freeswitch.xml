@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<document type="freeswitch/xml">
+  <!-- 加载默认的配置 -->
+  <X-PRE-PROCESS cmd="include" data="vars.xml"/>
+  <!-- 铃声配置文件 -->
+  <X-PRE-PROCESS cmd="include" data="ring-vars.xml"/>
+  <!-- 系统配置 -->
+  <X-PRE-PROCESS cmd="exec-config" data="wget -qO - http://192.168.2.10:6869/switch/config/sys/var"/>
+
+  <!-- mod_sofia 依赖用户数据进行授权 -->
+  <section name="directory" description="User Directory">
+    <X-PRE-PROCESS cmd="exec-config" data="wget -qO - http://$${web_config_url}/switch/config/directory"/>
+  </section>
+
+  <!-- 加载模块配置信息 -->
+  <section name="configuration" description="All Configuration">
+    <X-PRE-PROCESS cmd="include" data="autoload_configs/*.xml"/>
+  </section>
+
+  <!-- 语言 section 配置加载 -->
+  <section name="languages" description="Language Management">
+    <!-- 中文语言配置 -->
+    <X-PRE-PROCESS cmd="include" data="lang/zh/*.xml"/>
+  </section>
+
+  <!-- 拨号计划配置 -->
+  <!-- <section name="dialplan" description="Regex/XML Dialplan">
+    <Z-PRE-PROCESS cmd="include" data="dialplan/*.xml"/>
+  </section> -->
+</document>

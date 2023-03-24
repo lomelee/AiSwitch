@@ -1,0 +1,131 @@
+<configuration name="switch.conf" description="Core Configuration">
+
+  <cli-keybindings>
+    <key name="1" value="help"/>
+    <key name="2" value="status"/>
+    <key name="3" value="show channels"/>
+    <key name="4" value="show calls"/>
+    <key name="5" value="sofia status"/>
+    <key name="6" value="reloadxml"/>
+    <key name="7" value="console loglevel 0"/>
+    <key name="8" value="console loglevel 7"/>
+    <key name="9" value="sofia status profile internal"/>
+    <key name="10" value="sofia profile internal siptrace on"/>
+    <key name="11" value="sofia profile internal siptrace off"/>
+    <key name="12" value="version"/>
+  </cli-keybindings>
+
+  <default-ptimes>
+    <!-- 如果没有指定编码器的ptime, 默认 SDP中数据为 20ms -->
+    <!-- <codec name="G729" ptime="40"/> -->
+  </default-ptimes>
+
+  <settings>
+    <!-- 彩色控制台 -->
+    <param name="colorize-console" value="true"/>
+    <!-- 是否在拨号计划日志中，包含明细时间 timestamps -->
+    <param name="dialplan-timestamps" value="false"/>
+
+    <!-- 定时器默认20ms, 你可以设置更快的定时器事件 1m-timer=true -->
+    <!-- <param name="1ms-timer" value="true"/> -->
+
+    <!-- 在 HA 环境中设置 Switch 名称，设置Switch名称时，它将覆盖所有数据库DB中的系统主机名和curl请求，允许群集环境（例如RHCS）具有相同的FreesWitch配置，但作为不同的主机名运行 -->
+    <!-- <param name="switchname" value="AiSwitch"/> -->
+    <!-- CPU 空闲控件时间，默认30秒 -->
+    <!-- <param name="cpu-idle-smoothing-depth" value="30"/> -->
+
+    <!-- 最大同时打开的DB句柄数量 -->
+    <param name="max-db-handles" value="50"/>
+    <!-- 句柄打开的超时时间，单位：秒 -->
+    <param name="db-handle-timeout" value="10"/>
+
+    <!-- 在拒绝电话之前，最小闲置CPU -->
+    <!-- <param name="min-idle-cpu" value="25"/> -->
+
+    <!-- 心跳事件发送时间间隔（秒） -->
+    <!-- <param name="event-heartbeat-interval" value="20"/> -->
+
+    <!-- 一定 sessions-per-second 时间内（秒），最大创建的会话数 -->
+    <param name="max-sessions" value="1000"/>
+    <!-- 指定最大会话数，限定的时间（秒） -->
+    <param name="sessions-per-second" value="30"/>
+    <!-- 默认全局日志级别 Global Log Level - value is one of debug,info,notice,warning,err,crit,alert -->
+    <param name="loglevel" value="$${loglevel}"/>
+
+    <!-- 设置 core DEBUG 日志级别 level (0-10) -->
+    <!-- <param name="debug-level" value="10"/> -->
+
+    <!-- 设置SQLbuffer 长度，区间 32k to 10m -->
+    <!-- <param name="sql-buffer-len" value="1m"/> -->
+    <!-- 设置最大的SQL缓冲大小 -->
+    <!-- <param name="max-sql-buffer-len" value="2m"/> -->
+
+    <!-- 最小的DTMF按键时长，单位 ms -->
+    <!-- <param name="min-dtmf-duration" value="400"/> -->
+
+    <!-- 最大的DTMF按键时长，单位 ms-->
+    <!-- <param name="max-dtmf-duration" value="192000"/> -->
+
+    <!-- 默认的DTMF按键时长，收到事件 -->
+    <!-- <param name="default-dtmf-duration" value="2000"/> -->
+
+    <!-- 语音邮件相关配置 -->
+    <param name="mailer-app" value="sendmail"/>
+    <param name="mailer-app-args" value="-t"/>
+    <param name="dump-cores" value="false"/>
+
+    <!-- 是否为通道事件，启用详细内容描述 -->
+    <!-- <param name="verbose-channel-events" value="no"/> -->
+
+    <!-- 是否启用纳秒时钟 -->
+    <!-- <param name="enable-clock-nanosleep" value="true"/> -->
+
+    <!-- Enable monotonic timing -->
+    <!-- <param name="enable-monotonic-timing" value="true"/> -->
+
+    <!-- NEEDS DOCUMENTATION -->
+    <!-- <param name="enable-softtimer-timerfd" value="true"/> -->
+    <!-- <param name="enable-cond-yield" value="true"/> -->
+    <!-- <param name="enable-timer-matrix" value="true"/> -->
+    <!-- <param name="threaded-system-exec" value="true"/> -->
+    <!-- <param name="tipping-point" value="0"/> -->
+    <!-- <param name="timer-affinity" value="disabled"/> -->
+    <!-- NEEDS DOCUMENTATION -->
+
+    <!-- RTP port range -->
+    <param name="rtp-start-port" value="$${rtp-start-port}"/>
+    <param name="rtp-end-port" value="$${rtp-end-port}"/>
+
+    <!-- 在分配RTP端口之前测试端口没有被其他京东占用 -->
+    <!-- <param name="rtp-port-usage-robustness" value="true"/> -->
+
+    <!-- RTP 是否启用 ZRTP 加密 -->
+    <param name="rtp-enable-zrtp" value="false"/>
+
+    <!-- 核心数据库配置 -->
+    <!-- 设置 PgSQL 数据库 -->
+    <!-- <param name="core-db-dsn" value="pgsql://hostaddr=$${dbHost} dbname=$${dbName} user=$${dbUser} password='$${dbPwd}' options='-c client_min_messages=NOTICE'" /> -->
+    <!-- 设置 mysql 或者 mariadb 数据库 -->
+    <param name="core-db-dsn" value="mariadb://Server=$${dbHost};Port=$${dbPort};Database=$${dbName};Uid=$${dbUser};Pwd=$${dbPwd};" />
+
+    <!-- <param name="core-db-dsn" value="dsn:username:password" /> -->
+    <!-- 如果是SQLite, 可以配置路径 -->
+    <!-- <param name="core-db-name" value="/dev/shm/core.db" /> -->
+    <!-- 核心数据库如果 MSSQL -->
+    <!-- <param name="core-dbtype" value="MSSQL"/> -->
+
+    <!-- 是自动创建数据库 schemas -->
+    <!-- <param name="auto-create-schemas" value="true"/> -->
+
+    <!-- 自动清理事情 -->
+    <!-- <param name="auto-clear-sql" value="true"/> -->
+    <!-- <param name="enable-early-hangup" value="true"/> -->
+
+    <!-- 在registration中是否允许多次注册到同一账户 -->
+    <!-- <param name="multiple-registrations" value="true"/> -->
+    <!-- 最大音频通道数 -->
+    <!-- <param name="max-audio-channels" value="2"/> -->
+
+  </settings>
+
+</configuration>
