@@ -44,9 +44,9 @@ chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./
 
 # 拉取mod_unimrcp 依赖项
 wget https://www.unimrcp.org/project/component-view/unimrcp-deps-1-6-0-tar-gz/download -O /usr/src/libs/unimrcp-deps-1.6.0.tar.gz
-# git clone -b unimrcp-1.7.0 https://github.com/unispeech/unimrcp.git /usr/src/libs/unimrcp
-git clone https://github.com/unispeech/unimrcp.git /usr/src/libs/unimrcp
-git clone https://github.com/freeswitch/mod_unimrcp.git /usr/src/libs/mod_unimrcp
+# git clone -b unimrcp-1.8.0 https://github.com/unispeech/unimrcp.git /usr/src/libs/unimrcp
+git clone https://github.com/lomelee/unimrcp.git /usr/src/libs/unimrcp
+git clone https://github.com/lomelee/mod_unimrcp.git /usr/src/libs/mod_unimrcp
 # unimrcp 依赖项编译
 cd /usr/src/libs && tar -xvzf unimrcp-deps-1.6.0.tar.gz
 cd /usr/src/libs/unimrcp-deps-1.6.0/libs/apr && ./configure --prefix=/usr/local/apr && make && make install
