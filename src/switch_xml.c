@@ -1361,6 +1361,100 @@ static FILE *preprocess_exec(const char *cwd, const char *command, FILE *write_f
 
 }
 
+
+static FILE *preprocess_exec_config(const char *cwd, const char *command, FILE *write_fd, int rlevel)
+{
+#ifdef WIN32
+	FILE *fp = NULL;
+	char buffer[1024];
+
+	if (!command || !strlen(command)) goto end;
+
+	if ((fp = _popen(command, "r"))) {
+		while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+			if (fwrite(buffer, 1, strlen(buffer), write_fd) <= 0) {
+					break;
+			}
+		}
+
+		if(feof(fp)) {
+			_pclose(fp);
+		} else {
+			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, "Exec failed to read the pipe of [%s] to the end\n", command);
+		}
+	} else {
+		switch_snprintf(buffer, sizeof(buffer), "<!-- exec can not execute [%s] -->", command);
+		fwrite( buffer, 1, strlen(buffer), write_fd);
+ 	}
+#else
+	int fds[2], pid = 0;
+
+	if (pipe(fds)) {
+		goto end;
+	} else {					/* good to go */
+		pid = switch_fork();
+
+		if (pid < 0) {			/* ok maybe not */
+			close(fds[0]);
+			close(fds[1]);
+			goto end;
+		} else if (pid) {		/* parent */
+			char buf[1024] = "";
+			int bytes;
+			// 添加临时文件的变量
+			char ftemp_path[512] = "";
+			FILE *ftemp = NULL;
+			long nowTime = switch_time_now();
+			close(fds[1]);
+			// 新增临时文件，存放临时数据，方便继续解析。
+			// memset(ftemp_path, 0x00, 512);
+			sprintf(ftemp_path, "%s/config_%05d_%ld.txml", SWITCH_GLOBAL_dirs.log_dir, rlevel, nowTime);
+			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_INFO, "preprocess_exec_config start read and write ftemp x-pre-cmd ==========> cwd = %s, \
+																					command = %s, ftemp_path = %s \n", cwd, command, ftemp_path);
+			//创建一个用于读写的空文件
+			ftemp = fopen(ftemp_path, "w+");
+			// exsample 写入一行字符串
+			// fputs("这是 C 语言。", ftemp);
+			while ((bytes = read(fds[0], buf, sizeof(buf))) > 0) {
+				// 写入临时文件
+				if (fwrite(buf, 1, bytes, ftemp) <= 0) {
+					break;
+				}
+			}
+			// 关闭文件流
+			fclose(ftemp);
+
+			// while ((bytes = read(fds[0], buf, sizeof(buf))) > 0) {
+			// 	if (fwrite(buf, 1, bytes, write_fd) <= 0) {
+			// 		break;
+			// 	}
+			// }
+			close(fds[0]);
+			waitpid(pid, NULL, 0);
+			// 重新解析文件中的内容
+			if (preprocess(cwd, ftemp_path, write_fd, rlevel) < 0) {
+				// 如果层次已经到达100层，则提示超过限制
+				if (rlevel > 100) {
+					switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, 
+						"preprocess_exec_config Error including %s (Maximum recursion limit reached)\n", ftemp_path);
+				}
+			}
+		} else {
+			/*  child */
+			switch_close_extra_files(fds, 2);
+			close(fds[0]);
+			dup2(fds[1], STDOUT_FILENO);
+			switch_system(command, SWITCH_TRUE);
+			close(fds[1]);
+			exit(0);
+		}
+	}
+#endif
+  end:
+	
+	return write_fd;
+}
+
 static FILE *preprocess_glob(const char *cwd, const char *pattern, FILE *write_fd, int rlevel)
 {
 	char *full_path = NULL;
@@ -1454,7 +1548,7 @@ static int preprocess(const char *cwd, const char *file, FILE *write_fd, int rle
 		}
 
 		/* we ignore <include> or </include> for the sake of validators as well as <?xml version="1.0"?> type stuff */
-		if (strstr(buf, "<include>") || strstr(buf, "</include>") || strstr(buf, "<?")) {
+		if (strstr(buf, "<include>") || strstr(buf, "</include>") || strstr(buf, "<include/>")|| strstr(buf, "<?")) {
 			continue;
 		}
 
@@ -1546,6 +1640,8 @@ static int preprocess(const char *cwd, const char *file, FILE *write_fd, int rle
 				preprocess_glob(cwd, targ, write_fd, rlevel + 1);
 			} else if (!strcasecmp(tcmd, "exec")) {
 				preprocess_exec(cwd, targ, write_fd, rlevel + 1);
+			} else if (!strcasecmp(tcmd, "exec-config")) {
+				preprocess_exec_config(cwd, targ, write_fd, rlevel + 1);
 			}
 
 			continue;
@@ -1608,6 +1704,8 @@ static int preprocess(const char *cwd, const char *file, FILE *write_fd, int rle
 					preprocess_glob(cwd, arg, write_fd, rlevel + 1);
 				} else if (!strcasecmp(cmd, "exec")) {
 					preprocess_exec(cwd, arg, write_fd, rlevel + 1);
+				} else if (!strcasecmp(cmd, "exec-config")) {
+					preprocess_exec_config(cwd, arg, write_fd, rlevel + 1);
 				}
 			}
 
