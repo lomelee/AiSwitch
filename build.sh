@@ -1,5 +1,5 @@
 #!/bin/sh
-#设置sources镜像（本机设置了清华大学镜像）
+# 设置sources镜像（本机设置了清华大学镜像: sed -i s/mirrors.tuna.tsinghua.edu.cn/debian/g /etc/apt/sources.list）
 # sed -i s/deb.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list 
 apt-get update && apt-get -yq install git-core wget
 
@@ -35,7 +35,8 @@ cd /usr/src/libs/libks && cmake . -DCMAKE_INSTALL_PREFIX=/usr -DWITH_LIBBACKTRAC
 cd /usr/src/libs/sofia-sip && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --with-glib=no --without-doxygen --disable-stun --prefix=/usr/local && make -j`nproc --all` && make install
 cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --prefix=/usr && make -j`nproc --all` && make install
 # 编译前可以 make clean 一下， 获取直接 git clean -xfd 清空非版本控制的数据
-chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
+# 如果下面的命令包没有可执行的权限，那么在前面加上： chmod -R +x /usr/src/AiSwitch &&
+cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
 # mysql 或者 mariadb 也不需要 添加 --enable-core-odbc-support 参数支持
 # chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure --enable-core-odbc-support && make -j`nproc` && make install
 # 添加pgsql驱动套件编译选项（PgSQL 不在需要 --enable-core-pgsql-support  参数，编译前需要 make clean 一下）
@@ -59,7 +60,9 @@ cd /usr/src/libs/unimrcp && ./bootstrap && ./configure --disable-client-app --di
 export PKG_CONFIG_PATH=/usr/local/freeswitch/lib/pkgconfig:/usr/local/unimrcp/lib/pkgconfig && cd /usr/src/libs/mod_unimrcp && ./bootstrap.sh && ./configure && make && make install
 
 # 移动配置
-mv /usr/local/freeswitch/conf /usr/local/freeswitch/.conf
+cd /usr/src/AiSwitch
+cp -R aisConf /usr/local/freeswitch/.conf
+# ln -sf /usr/src/AiSwitch/aisConf /usr/local/freeswitch/conf
 # 进入编译目录
 cd /usr/src/AiSwitch
 # copy phone music and sounds to fs dir files
@@ -72,4 +75,4 @@ ln -sf /usr/local/freeswitch/bin/freeswitch /usr/bin/ \
 
 # 设置时区
 ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo Asia/Shanghai > /etc/timezone
-apt-get update && apt-get install -y locales && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+apt-get install -y locales && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
