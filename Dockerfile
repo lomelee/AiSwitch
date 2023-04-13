@@ -73,7 +73,9 @@ RUN export PKG_CONFIG_PATH=/usr/local/freeswitch/lib/pkgconfig:/usr/local/unimrc
 # 移动默认配置信息到隐藏的.conf文件夹
 RUN mv /usr/local/freeswitch/conf /usr/local/freeswitch/.conf
 
-# 拷贝相关文件到运行目录(docker中没有 cp -r 命令选项，因为他类似于 unix)
-COPY /usr/src/AiSwitch/aisConf /usr/local/freeswitch/conf
-COPY /usr/src/AiSwitch/sounds /usr/local/freeswitch/sounds
-COPY /usr/src/AiSwitch/aisScript /usr/local/freeswitch/scripts
+# 拷贝相关文件到运行目录(docker中没有 cp -r 命令选项，因为他类似于 unix) 
+# 注意：docker 中 copy 源文件夹必须是当前目录，所以先 cd 到指定目录
+RUN cd /usr/src/AiSwitch
+COPY aisConf /usr/local/freeswitch/conf
+COPY sounds /usr/local/freeswitch/sounds
+COPY aisScript /usr/local/freeswitch/scripts
