@@ -10,15 +10,21 @@ cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && ma
 export PKG_CONFIG_PATH=/usr/local/freeswitch/lib/pkgconfig:/usr/local/unimrcp/lib/pkgconfig
 # 编译 mod_unimrcp 模块
 cd /usr/src/libs/mod_unimrcp && ./bootstrap.sh && ./configure && make && make install
+
 # 移动配置
-# mv /usr/local/freeswitch/conf /usr/local/freeswitch/.conf
-# copy phone music and sounds to fs dir files
-# cp -R /usr/src/AiSwitch/sounds /usr/local/freeswitch/sounds
+cd /usr/src/AiSwitch
+cp -R aisConf /usr/local/freeswitch/.conf
 
 # 删除默认配置
 rm /usr/local/freeswitch/conf -rf
-# 添加软链接
+# 删除默认的脚本
+rm /usr/local/freeswitch/scripts -rf
+# 删除默认声音文件
+rm /usr/local/freeswitch/sounds -rf
+
+# 添加软链接目录
 ln -sf /usr/src/AiSwitch/aisConf /usr/local/freeswitch/conf
+ln -sf /usr/src/AiSwitch/aisScript /usr/local/freeswitch/scripts
 ln -sf /usr/src/AiSwitch/sounds /usr/local/freeswitch/sounds
 
 

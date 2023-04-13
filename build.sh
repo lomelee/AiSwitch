@@ -36,7 +36,7 @@ cd /usr/src/libs/sofia-sip && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --
 cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --prefix=/usr && make -j`nproc --all` && make install
 # 编译前可以 make clean 一下， 获取直接 git clean -xfd 清空非版本控制的数据
 # 如果下面的命令包没有可执行的权限，那么在前面加上： chmod -R +x /usr/src/AiSwitch &&
-cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
+cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure --prefix=/usr/local/fsfile --disable-fhs && make -j`nproc` && make install
 # mysql 或者 mariadb 也不需要 添加 --enable-core-odbc-support 参数支持
 # chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure --enable-core-odbc-support && make -j`nproc` && make install
 # 添加pgsql驱动套件编译选项（PgSQL 不在需要 --enable-core-pgsql-support  参数，编译前需要 make clean 一下）
@@ -62,14 +62,19 @@ export PKG_CONFIG_PATH=/usr/local/freeswitch/lib/pkgconfig:/usr/local/unimrcp/li
 # 移动配置
 cd /usr/src/AiSwitch
 cp -R aisConf /usr/local/freeswitch/.conf
-# ln -sf /usr/src/AiSwitch/aisConf /usr/local/freeswitch/conf
-# 进入编译目录
-cd /usr/src/AiSwitch
-# copy phone music and sounds to fs dir files
-cp -R sounds /usr/local/freeswitch/sounds
 
+# 删除默认配置
+rm /usr/local/freeswitch/conf -rf
+# 删除默认的脚本
+rm /usr/local/freeswitch/scripts -rf
+# 删除默认声音文件
+rm /usr/local/freeswitch/sounds -rf
 
-# 增加软连接
+# 添加软链接目录
+ln -sf /usr/src/AiSwitch/aisConf /usr/local/freeswitch/conf
+ln -sf /usr/src/AiSwitch/sounds /usr/local/freeswitch/sounds
+
+# 增加软连接文件
 ln -sf /usr/local/freeswitch/bin/freeswitch /usr/bin/ \
     && ln -sf /usr/local/freeswitch/bin/fs_cli /usr/bin/
 
