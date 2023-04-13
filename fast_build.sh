@@ -24,8 +24,8 @@ rm /usr/local/freeswitch/sounds -rf
 
 # 添加软链接目录
 ln -sf /usr/src/AiSwitch/aisConf /usr/local/freeswitch/conf
-ln -sf /usr/src/AiSwitch/aisScript /usr/local/freeswitch/scripts
 ln -sf /usr/src/AiSwitch/sounds /usr/local/freeswitch/sounds
+ln -sf /usr/src/AiSwitch/aisScript /usr/local/freeswitch/scripts
 
 
 # 增加软连接

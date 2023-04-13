@@ -57,8 +57,8 @@ RUN chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j &
 # 拉取mod_unimrcp 依赖项
 RUN wget https://www.unimrcp.org/project/component-view/unimrcp-deps-1-6-0-tar-gz/download -O /usr/src/libs/unimrcp-deps-1.6.0.tar.gz
 # git clone -b unimrcp-1.7.0 https://github.com/unispeech/unimrcp.git /usr/src/libs/unimrcp
-RUN git clone https://github.com/unispeech/unimrcp.git /usr/src/libs/unimrcp
-RUN git clone https://github.com/freeswitch/mod_unimrcp.git /usr/src/libs/mod_unimrcp
+RUN git clone https://github.com/lomelee/unimrcp.git /usr/src/libs/unimrcp
+RUN git clone https://github.com/lomelee/mod_unimrcp.git /usr/src/libs/mod_unimrcp
 # unimrcp 依赖项编译
 RUN cd /usr/src/libs && tar -zxvf unimrcp-deps-1.6.0.tar.gz
 RUN cd /usr/src/libs/unimrcp-deps-1.6.0/libs/apr && ./configure --prefix=/usr/local/apr && make && make install
@@ -71,9 +71,10 @@ RUN cd /usr/src/libs/unimrcp && ./bootstrap && ./configure --disable-client-app 
 RUN export PKG_CONFIG_PATH=/usr/local/freeswitch/lib/pkgconfig:/usr/local/unimrcp/lib/pkgconfig && cd /usr/src/libs/mod_unimrcp && ./bootstrap.sh && ./configure && make && make install
 
 
-# 移动配置信息文件夹
+# 移动默认配置信息到隐藏的.conf文件夹
 RUN mv /usr/local/freeswitch/conf /usr/local/freeswitch/.conf
-# 进入编译目录
-RUN cd /usr/src/AiSwitch
-# copy phone music and sounds to fs dir files
-COPY sounds /usr/local/freeswitch/sounds
+
+# 拷贝相关文件到运行目录
+RUN cp -R /usr/src/AiSwitch/aisConf /usr/local/freeswitch/conf \
+    cp -R /usr/src/AiSwitch/sounds /usr/local/freeswitch/sounds \
+    cp -R /usr/src/AiSwitch/aisScript /usr/local/freeswitch/scripts
