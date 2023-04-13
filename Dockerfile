@@ -79,3 +79,7 @@ RUN cd /usr/src/AiSwitch
 COPY aisConf /usr/local/freeswitch/conf
 COPY sounds /usr/local/freeswitch/sounds
 COPY aisScript /usr/local/freeswitch/scripts
+
+COPY aisConf /usr/local/freeswitch/.aisConf
+COPY sounds usr/local/freeswitch/.sounds
+COPY aisScript /usr/local/freeswitch/.scripts
