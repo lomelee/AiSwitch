@@ -1,15 +1,15 @@
 <include>
  <profile name="AisMRCPV2" version="2">
-   <param name="client-ip" value="192.168.2.11"/>
-   <param name="client-port" value="5090"/>
-   <param name="server-ip" value="192.168.2.11"/>
-   <param name="server-port" value="8060"/>
+   <param name="client-ip" value="$${mrcp_client_ip}"/>
+   <param name="client-port" value="$${mrcp_client_sip_port}"/>
+   <param name="server-ip" value="$${mrcp_server_ip}"/>
+   <param name="server-port" value="$${mrcp_server_sip_port}"/>
    <param name="sip-transport" value="udp"/>
    <param name="ua-name" value="AiSwitch"/>
    <param name="sdp-origin" value="AiSwitch"/>
-   <param name="rtp-ip" value="192.168.2.11"/>
-   <param name="rtp-port-min" value="4000"/>
-   <param name="rtp-port-max" value="5000"/>
+   <param name="rtp-ip" value="$${mrcp_client_ip}"/>
+   <param name="rtp-port-min" value="$${mrcp_rtp_port_min}"/>
+   <param name="rtp-port-max" value="$${mrcp_rtp_port_max}"/>
    <param name="codecs" value="PCMU PCMA L16/96/8000"/>
    <synthparams>
    </synthparams>

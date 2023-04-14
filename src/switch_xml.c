@@ -1413,7 +1413,7 @@ static FILE *preprocess_exec_config(const char *cwd, const char *command, FILE *
 																					command = %s, ftemp_path = %s \n", cwd, command, ftemp_path);
 			//创建一个用于读写的空文件
 			ftemp = fopen(ftemp_path, "w+");
-			// exsample 写入一行字符串
+			// example 写入一行字符串
 			// fputs("这是 C 语言。", ftemp);
 			while ((bytes = read(fds[0], buf, sizeof(buf))) > 0) {
 				// 写入临时文件
@@ -1423,12 +1423,6 @@ static FILE *preprocess_exec_config(const char *cwd, const char *command, FILE *
 			}
 			// 关闭文件流
 			fclose(ftemp);
-
-			// while ((bytes = read(fds[0], buf, sizeof(buf))) > 0) {
-			// 	if (fwrite(buf, 1, bytes, write_fd) <= 0) {
-			// 		break;
-			// 	}
-			// }
 			close(fds[0]);
 			waitpid(pid, NULL, 0);
 			// 重新解析文件中的内容
