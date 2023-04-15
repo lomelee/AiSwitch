@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xmlns="http://www.w3.org/2001/06/grammar" xml:lang="en-US" version="1.0" mode="voice" root="service">
+  <rule id="service">
+    <ruleref uri="#speech-to-text" />
+  </rule>
+  <rule id="speech-to-text">
+    <!-- 识别参数节点 -->
+    <asr-params>no-input-timeout=20000;recognition-timeout=25000;sensitivity-level=0.15;speech-complete-timeout=500;start-input-timers=true</asr-params>
+  </rule>
+</grammar>
