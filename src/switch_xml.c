@@ -1398,14 +1398,17 @@ static FILE *preprocess_exec_config(const char *cwd, const char *command, FILE *
 			close(fds[0]);
 			close(fds[1]);
 			goto end;
-		} else if (pid) {		/* parent */
+		} else if (pid) {			
+			/* parent */
 			char buf[1024] = "";
 			int bytes;
+			int needReProcess = 0;
 			// 添加临时文件的变量
 			char ftemp_path[512] = "";
 			FILE *ftemp = NULL;
-			long nowTime = switch_time_now();
+			long nowTime = 0;
 			close(fds[1]);
+			nowTime = switch_time_now();
 			// 新增临时文件，存放临时数据，方便继续解析。
 			// memset(ftemp_path, 0x00, 512);
 			sprintf(ftemp_path, "%s/config_%05d_%ld.txml", SWITCH_GLOBAL_dirs.log_dir, rlevel, nowTime);
@@ -1414,32 +1417,35 @@ static FILE *preprocess_exec_config(const char *cwd, const char *command, FILE *
 			//创建一个用于读写的空文件
 			ftemp = fopen(ftemp_path, "w+");
 			// example 写入一行字符串
-			// fputs("这是 C 语言。", ftemp);
+			// fputs("这是 C 语言。", ftemp);			
 			while ((bytes = read(fds[0], buf, sizeof(buf))) > 0) {
+				needReProcess = 1;
 				// 写入临时文件
 				if (fwrite(buf, 1, bytes, ftemp) <= 0) {
 					break;
-				}
+				}				
 			}
-			// 关闭文件流
-			fclose(ftemp);
 			close(fds[0]);
+			// 关闭文件流
+			fclose(ftemp);			
 			waitpid(pid, NULL, 0);
-			// 重新解析文件中的内容
-			if (preprocess(cwd, ftemp_path, write_fd, rlevel) < 0) {
-				// 如果层次已经到达100层，则提示超过限制
-				if (rlevel > 100) {
-					switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, 
-						"preprocess_exec_config Error including %s (Maximum recursion limit reached)\n", ftemp_path);
+			if (1 == needReProcess) {
+				// 重新解析文件中的内容
+				if (preprocess(cwd, ftemp_path, write_fd, rlevel) < 0) {
+					// 如果层次已经到达100层，则提示超过限制
+					if (rlevel > 100) {
+						switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, 
+							"preprocess_exec_config Error including %s (Maximum recursion limit reached)\n", ftemp_path);
+					}
 				}
-			}
+			}			
 		} else {
 			/*  child */
 			switch_close_extra_files(fds, 2);
 			close(fds[0]);
+			// 不指定文件描述符号到
 			dup2(fds[1], STDOUT_FILENO);
 			switch_system(command, SWITCH_TRUE);
-			close(fds[1]);
 			exit(0);
 		}
 	}
