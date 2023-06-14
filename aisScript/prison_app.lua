@@ -179,6 +179,20 @@ local function prisonLogin(prisonNo)
     end
 
     local prisonData = retObj.data
+
+    -- 是否禁用拨打
+    local isDisable = false
+    if  nil ~= prisonData.teldisable then
+        freeswitch.consoleLog("Notice", "管理员禁用亲情电话拨打\n")
+        isDisable = prisonData.teldisable
+    end
+
+    if true == isDisable then
+        session:streamFile("custom/mgr_disable.wav")
+        session:hangup()
+        return false
+    end
+
     prisonInfo.pwd = prisonData.pwd
     -- 剩余拨打次数
     prisonInfo.callTime = prisonData.number
@@ -463,7 +477,7 @@ local function addPrisonJoinConf(confName, relaPhone)
     session:execute("lua", "record_conference.lua " .. recordName .. " " .. confName)
     freeswitch.consoleLog("WARNING", "conference start, Add Prison JOIN, prisonExten : " .. prisonExten .. "\n")
     -- 通过Session 连接到会议
-    session:execute("conference", string.format("%s@PrisonConfig+flags{}", confName))
+    session:execute("conference", string.format("%s@PrisonConfig+flags{dist-dtmf}", confName))
     -- 通过API连接到会议(发起呼叫)
     -- api:executeString("uuid_transfer " .. fUuid .. " " .. confName .. "@PrisonConfig+flags{}")
 end
@@ -503,14 +517,14 @@ local function addRelativeJoinConf(confName, relaPhone)
     if string.find(gatewayName, "user/") then
         -- user/Jixun (网关 -> FS 注册)
         api:executeString("conference " .. confName ..
-                              "@PrisonConfig+flags{mintwo|join-only} bgdial {bridge_early_media=true,ignore_early_media=false,caller_id_number=" ..
+                              "@PrisonConfig+flags{mintwo|join-only|dist-dtmf} bgdial {bridge_early_media=true,ignore_early_media=false,caller_id_number=" ..
                               confName .. "," .. exeOnAnswerStr .. ",origination_uuid=" .. destUuid .. ",fuuid=" ..
                               fUuid .. ",dest_real_number=" .. relaPhone .. "}" .. gatewayName)
         freeswitch.consoleLog("WARNING", "conference with USER/GW link relaPhone : " .. relaPhone .. "\n")
     else
         -- sofia/gateway/gw-demo/ (FS -> 网关 注册)        
         api:executeString("conference " .. confName ..
-                              "@PrisonConfig+flags{mintwo|join-only} bgdial {bridge_early_media=true,ignore_early_media=false,caller_id_number=" ..
+                              "@PrisonConfig+flags{mintwo|join-only|dist-dtmf} bgdial {bridge_early_media=true,ignore_early_media=false,caller_id_number=" ..
                               confName .. "," .. exeOnAnswerStr .. ",origination_uuid=" .. destUuid .. ",fuuid=" ..
                               fUuid .. "}" .. gatewayName .. relaPhone)
         freeswitch.consoleLog("WARNING", "conference with SOFIA/GW link relaPhone : " .. relaPhone .. "\n")
@@ -556,6 +570,18 @@ local function callRelative(nKey)
     end
 
     freeswitch.consoleLog("INFO", "curRelative : " .. cJson:encode(curRelative) .. "\n")
+
+    -- 验证亲属是否被禁用
+    if nil ~= curRelative.telstatus then
+        local isDisable = curRelative.telstatus
+        -- 如果亲属被禁用，提示用户并挂机
+        if true == isDisable then
+            session:streamFile("custom/relative_diable.wav")
+            session:hangup()
+            return true
+        end
+    end
+
     -- 验证罪犯：剩余拨打次数
     if prisonInfo.callTime <= 0 then
         session:streamFile("custom/call_time_none.wav")

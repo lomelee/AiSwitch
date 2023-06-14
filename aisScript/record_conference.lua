@@ -18,7 +18,7 @@ recordTime = tonumber(recordTime)
 -- 如果按照日期拆分目录
 local strday = ""
 if isByDay == "true" then
-    strday = os.date("%Y%m%d", recordTime)
+    strday = os.date("%Y/%m/%d", recordTime)
     strday = strday .. "/"
 end
 
@@ -35,7 +35,7 @@ else
 end
 
 -- 录音文件短路径
-local recordShortPath = strday .. recordName
+local recordShortPath =  strday .. recordName
 -- 录音文件名用来写入 calls_list 表
 -- session:setVariable("record_file_name", recordShortPath)
 -- 设置多个通道同时存在该参数
@@ -44,7 +44,7 @@ session:execute("export", "record_file_name=" .. recordShortPath)
 -- api:executeString("conference " .. confName .. " set record_file_name " .. recordShortPath)
 freeswitch.consoleLog("INFO", "record_conference_name is " .. recordShortPath .. "\n")
 -- 执行会议录音 API（可能会议还没有开始, 所以使用 set conference_auto_record 参数的形式）
--- local resultData = api:executeString("conference " .. confName .. " record " .. baseDir .. "/" .. recordShortPath)
+-- local resultData = api:executeString("conference " .. confName .. " record " .. baseDir .. recordShortPath)
 -- freeswitch.consoleLog("NOTICE", "record_conference_name is " .. resultData .. ", " .. recordShortPath .. " \n")
 -- 设置自动录音的路径
 session:execute("set", "conference_auto_record=" .. baseDir .. "/" .. recordShortPath)

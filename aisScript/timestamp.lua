@@ -94,7 +94,7 @@ while true do
                         -- 向会议中播放回铃音（可以直接播放语音文件）
                         -- api:executeString("conference " .. confName .. " play custom/thanks.wav")
                         api:executeString("conference " .. confName .. " play tone_stream://%(2000,4000,440,480)")
-                        
+
                     end
                 else
                     -- 此处的判断有几种情况：

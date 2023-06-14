@@ -18,7 +18,8 @@ recordTime = tonumber(recordTime)
 -- 如果按照日期拆分目录
 local strday = ""
 if isByDay == "true" then
-    strday = os.date("%Y%m%d", recordTime)
+    -- 年/月/日 目录格式
+    strday = os.date("%Y/%m/%d", recordTime)
     strday = strday .. "/"
 end
 
