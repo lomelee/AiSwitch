@@ -173,7 +173,7 @@ local function prisonLogin(prisonNo)
     end
 
     if code ~= 0 then
-        -- 提示：“编号不存在，请确认后，请重新输入”
+        -- 提示：“查询编号错误”
         session:streamFile("custom/query_num_error.wav")
         return false
     end
