@@ -182,12 +182,12 @@ local function prisonLogin(prisonNo)
 
     -- 是否禁用拨打
     local isDisable = false
-    if  nil ~= prisonData.teldisable then
-        freeswitch.consoleLog("Notice", "管理员禁用亲情电话拨打\n")
+    if  nil ~= prisonData.teldisable then        
         isDisable = prisonData.teldisable
     end
 
     if true == isDisable then
+        freeswitch.consoleLog("Notice", "管理员禁用亲情电话拨打\n")
         session:streamFile("custom/mgr_disable.wav")
         session:hangup()
         return false
@@ -665,13 +665,13 @@ end
 
 -- 设置一些信息
 preSetInfo()
+-- 发送AisFlag
+sendAisCallCenterFlag()
 -- 分机应答
 session:answer()
 session:sleep(50)
 -- 执行：验证民警分机以及监听状态
 if true == checkPoliceStatus() then
-    -- 发送AisFlag
-    sendAisCallCenterFlag()
     -- 执行：输入编号
     pleaseInputNo()
     -- 执行：输入密码
