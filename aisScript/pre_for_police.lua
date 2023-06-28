@@ -3,7 +3,7 @@
 -- 非管理员挂断 
 local api = freeswitch.API()
 
-local domain = session:getVariable("domain_name")
+local domain = session:getVariable("domain_name") or session:getVariable("local_ip_v4")
 --  ${caller_id_number}  主叫分机号码
 local caller = session:getVariable("caller_id_number")
 
