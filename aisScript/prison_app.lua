@@ -470,7 +470,7 @@ end
 
 -- 罪犯分机发起会议
 local function addPrisonJoinConf(confName, relaPhone)
-    -- 将罪犯分机转进会议
+    -- ASR处理
     session:execute("lua", "asr.lua " .. confName .. " caller " .. relaPhone)
     local recordName = confName .. "-" .. relaPhone
     -- 会议录音
