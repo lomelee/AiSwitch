@@ -42,7 +42,7 @@ local recordShortPath =  strday .. recordName
 session:execute("export", "record_file_name=" .. recordShortPath)
 -- 打印会议录音路径
 freeswitch.consoleLog("INFO", "record_conference_name is " .. recordShortPath .. "\n")
--- 拼接录音全路径录音
+-- 拼接录音文件全路径
 local fullRecordPath = baseDir .. "/" .. recordShortPath
 -- 设置自动录音的路径
 session:execute("set", "conference_auto_record=" .. fullRecordPath)

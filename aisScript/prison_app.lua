@@ -1,7 +1,7 @@
 local api = freeswitch.API()
 local cJson = freeswitch.JSON()
 local domain = session:getVariable("domain_name") or session:getVariable("local_ip_v4")
-local context = session:getVariable("user_context")
+local context = session:getVariable("user_context") or "INLINE-2"
 local fUuid = session:get_uuid()
 local prisonExten = session:getVariable("caller_id_number")
 -- 外呼字符串,多个网关可以用|分割, sofia/gateway/gw-jude/68|
