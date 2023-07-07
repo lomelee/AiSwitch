@@ -182,7 +182,7 @@ local function prisonLogin(prisonNo)
 
     -- 是否禁用拨打
     local isDisable = false
-    if  nil ~= prisonData.teldisable then        
+    if nil ~= prisonData.teldisable then
         isDisable = prisonData.teldisable
     end
 
@@ -470,10 +470,10 @@ end
 
 -- 罪犯分机发起会议
 local function addPrisonJoinConf(confName, relaPhone)
-    -- ASR处理
+    -- 罪犯通道加入ASR处理
     session:execute("lua", "asr.lua " .. confName .. " caller " .. relaPhone)
+    -- 发起会议录音
     local recordName = confName .. "-" .. relaPhone
-    -- 会议录音
     session:execute("lua", "record_conference.lua " .. recordName .. " " .. confName)
     freeswitch.consoleLog("WARNING", "conference start, Add Prison JOIN, prisonExten : " .. prisonExten .. "\n")
     -- 通过Session 连接到会议

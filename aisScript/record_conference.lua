@@ -40,11 +40,11 @@ local recordShortPath =  strday .. recordName
 -- session:setVariable("record_file_name", recordShortPath)
 -- 设置多个通道同时存在该参数
 session:execute("export", "record_file_name=" .. recordShortPath)
--- 设置会议参数
--- api:executeString("conference " .. confName .. " set record_file_name " .. recordShortPath)
+-- 打印会议录音路径
 freeswitch.consoleLog("INFO", "record_conference_name is " .. recordShortPath .. "\n")
--- 执行会议录音 API（可能会议还没有开始, 所以使用 set conference_auto_record 参数的形式）
--- local resultData = api:executeString("conference " .. confName .. " record " .. baseDir .. recordShortPath)
--- freeswitch.consoleLog("NOTICE", "record_conference_name is " .. resultData .. ", " .. recordShortPath .. " \n")
+-- 拼接录音全路径录音
+local fullRecordPath = baseDir .. "/" .. recordShortPath
 -- 设置自动录音的路径
-session:execute("set", "conference_auto_record=" .. baseDir .. "/" .. recordShortPath)
+session:execute("set", "conference_auto_record=" .. fullRecordPath)
+-- 执行会议录音 API（会议还没有开始时，可能会执行失败。如果录音还没有开始, 那么上面一行执行 set conference_auto_record 参数后，会自动录音）
+api:executeString("conference " .. confName .. " record " .. fullRecordPath)
