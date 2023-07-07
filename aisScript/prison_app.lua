@@ -684,4 +684,3 @@ if true == checkPoliceStatus() then
         futureProcess();
     end
 end
-

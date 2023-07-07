@@ -55,8 +55,12 @@ local function clearSession()
     api:executeString("conference " .. confName .. " hup all")
     if destUuid ~= "" then
         api:executeString("uuid_kill " .. destUuid)
-        freeswitch.consoleLog("INFO", "拆外线端!\n")
+        freeswitch.consoleLog("INFO", "拆外线端! " .. destUuid .. "\n")
+        -- 删除亲属外线通道对应的内存（释放内存）
+        hashKey = "delete/" .. confName .. "/dest/"
+        api:executeString("hash " .. hashKey)
     end
+
     Sleep(1)
 end
 
