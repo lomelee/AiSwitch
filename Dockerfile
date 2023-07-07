@@ -11,7 +11,7 @@ RUN git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch
 RUN git clone https://github.com/signalwire/libks /usr/src/libs/libks
 RUN git clone https://github.com/freeswitch/sofia-sip /usr/src/libs/sofia-sip
 RUN git clone https://github.com/freeswitch/spandsp /usr/src/libs/spandsp
-RUN cd /usr/src/libs/spandsp && git checkout 0d2e6ac
+RUN cd /usr/src/libs/spandsp && git checkout 728b60a
 # add build tool depend
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install --no-install-recommends \
     # build
