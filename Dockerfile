@@ -15,8 +15,7 @@ RUN git clone --branch v1.8.3 https://github.com/signalwire/libks.git /usr/src/l
 RUN git clone --branch v1.13.15 https://github.com/freeswitch/sofia-sip /usr/src/libs/sofia-sip
 RUN git clone https://github.com/freeswitch/spandsp /usr/src/libs/spandsp
 # 728b60abdd1a71e254b8e831e9156521d788b2b9
-RUN cd /usr/src/libs/spandsp && git checkout 0d2e6ac
-
+RUN cd /usr/src/libs/spandsp && git checkout 728b60abdd1a71e254b8e831e9156521d788b2b9
 # add build tool depend
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install --no-install-recommends \
     # build
