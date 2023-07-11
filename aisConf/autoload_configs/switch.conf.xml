@@ -93,8 +93,8 @@
     <!-- NEEDS DOCUMENTATION -->
 
     <!-- RTP port range -->
-    <param name="rtp-start-port" value="$${rtp-start-port}"/>
-    <param name="rtp-end-port" value="$${rtp-end-port}"/>
+    <param name="rtp-start-port" value="$${rtp_start_port}"/>
+    <param name="rtp-end-port" value="$${rtp_end_port}"/>
 
     <!-- 在分配RTP端口之前测试端口没有被其他京东占用 -->
     <!-- <param name="rtp-port-usage-robustness" value="true"/> -->
