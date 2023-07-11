@@ -45,5 +45,5 @@ if asrController == "on" then
     session:setVariable("asr_engine", "unimrcp:AisMRCPV2")
     session:setVariable("fire_asr_events", "true")
     session:execute("detect_speech",
-        "unimrcp:AisMRCPV2 {start-input-timers=false,no-input-timeout=10000,recognition-timeout=60000,start-recognize=true,define-grammar=false}hello hello")
+        "unimrcp:AisMRCPV2 {start-input-timers=false,no-input-timeout=5000,recognition-timeout=60000,start-recognize=true,define-grammar=false}hello hello")
 end

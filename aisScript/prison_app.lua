@@ -488,9 +488,6 @@ local function addPoliceJoinConf(confName)
     local policeChannelUuid = getPoliceUUIDByNum()
     -- 如果民警分机正在通话中
     if policeChannelUuid ~= "" and policeChannelUuid ~= nil then
-        -- 设置民警分机通道ID
-        local hashKey = "insert/" .. fUuid .. "/policeId/" .. policeChannelUuid
-        api:executeString("hash " .. hashKey)
         -- 如果找到民警分机通道编号（注意 context 参数是必要参数）
         api:executeString("uuid_transfer " .. policeChannelUuid .. " " .. confName ..
                               "@PrisonConfig+flags{moderator|ghost|endconf|nomoh|mute}" .. " XML " .. context)
@@ -501,6 +498,15 @@ local function addPoliceJoinConf(confName)
                               "@PrisonConfig+flags{moderator|ghost|endconf|nomoh|mute} dial {ignore_early_media=false}user/" ..
                               policeExtenNo .. "@" .. domain)
         freeswitch.consoleLog("WARNING", "conference link policeExtenNo : " .. policeExtenNo .. "\n")
+    end
+
+    -- 重新获取一次分机对应的通道ID，因为会议模式下通道ID已经发生改变
+    local policeChannelUuid = getPoliceUUIDByNum()
+    -- 如果民警分机正在通话中
+    if policeChannelUuid ~= "" and policeChannelUuid ~= nil then
+        -- 设置民警分机通道ID
+        local hashKey = "insert/" .. fUuid .. "/policeId/" .. policeChannelUuid
+        api:executeString("hash " .. hashKey)
     end
 end
 
