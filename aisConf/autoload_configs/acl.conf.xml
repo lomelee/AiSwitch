@@ -3,7 +3,7 @@
 
     <!-- esl 连接策略 -->
     <list name="esl" default="allow">
-      <node type="allow" cidr="192.168.0.0/16"/>
+      <node type="allow" cidr="192.168.0.0/16" />
     </list>
 
     <!--
@@ -25,13 +25,13 @@
       the users variables and params apply as if they
       digest authenticated.
     -->
+    <!-- ACL 允许的 IP 写在 domains 下面，导致注册上来的分机 user_context 都为 public 不会是指定的 context -->
     <list name="domains" default="deny">
       <!-- domain= is special it scans the domain from the directory to build the ACL -->
-      <node type="allow" domain="$${domain}"/>
+      <node type="allow" domain="$${domain}" />
       <!-- use cidr= if you wish to allow ip ranges to this domains acl. -->
       <!-- <node type="allow" cidr="192.168.0.0/24"/> -->
     </list>
 
   </network-lists>
 </configuration>
-
