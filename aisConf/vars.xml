@@ -16,7 +16,8 @@
   <!-- 全局编码类型 -->
   <X-PRE-PROCESS cmd="set" data="global_codec_prefs=OPUS,G722,PCMU,PCMA,H264,VP8"/>
   <!-- 输出支持的编码类型 -->
-  <X-PRE-PROCESS cmd="set" data="outbound_codec_prefs=OPUS,G722,PCMU,PCMA,H264,VP8"/>
+  <!-- <Z-PRE-PROCESS cmd="set" data="outbound_codec_prefs=OPUS,G722,PCMU,PCMA,H264,VP8"/> -->
+  <X-PRE-PROCESS cmd="set" data="outbound_codec_prefs=PCMU,PCMA"/>
 
   <!-- unroll-loops 用于打开 sip 环回展开 -->
   <X-PRE-PROCESS cmd="set" data="unroll_loops=true"/>

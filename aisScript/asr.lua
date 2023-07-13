@@ -40,10 +40,10 @@ local rfName = confName .. "-" .. destNum
 session:execute("lua", "record.lua " .. rfName .. " " .. preName)
 
 -- 如果配置的ASR为 on 那么使用unimrcp 连接 ASR 引擎，发起翻译
-local asrController = session:getVariable("asr_controller") or "off"
+local asrController = freeswitch.getGlobalVariable("asr_controller") or "off"
 if asrController == "on" then
     session:setVariable("asr_engine", "unimrcp:AisMRCPV2")
-    session:setVariable("fire_asr_events", "true")
+    -- session:setVariable("fire_asr_events", "true")
     session:execute("detect_speech",
         "unimrcp:AisMRCPV2 {start-input-timers=false,no-input-timeout=5000,recognition-timeout=60000,start-recognize=true,define-grammar=false}hello hello")
 end
