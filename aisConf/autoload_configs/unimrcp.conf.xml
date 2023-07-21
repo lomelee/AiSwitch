@@ -10,9 +10,9 @@
     <!-- Enable events for profile creation, open, and close -->
     <param name="enable-profile-events" value="true"/>
 
-    <param name="max-connection-count" value="100"/>
+    <param name="max-connection-count" value="1000"/>
     <param name="offer-new-connection" value="1"/>
-    <param name="request-timeout" value="3000"/>
+    <param name="request-timeout" value="10000"/>
   </settings>
 
   <profiles>
@@ -20,4 +20,3 @@
   </profiles>
 
 </configuration>
-
