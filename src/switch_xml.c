@@ -1411,9 +1411,7 @@ static FILE *preprocess_exec_config(const char *cwd, const char *command, FILE *
 			nowTime = switch_time_now();
 			// 新增临时文件，存放临时数据，方便继续解析。
 			// memset(ftemp_path, 0x00, 512);
-			sprintf(ftemp_path, "%s/config_%05d_%ld.txml", SWITCH_GLOBAL_dirs.log_dir, rlevel, nowTime);
-			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_INFO, "preprocess_exec_config start read and write ftemp x-pre-cmd ==========> cwd = %s, \
-																					command = %s, ftemp_path = %s \n", cwd, command, ftemp_path);
+			sprintf(ftemp_path, "%s/config_%05d_%ld.txml", SWITCH_GLOBAL_dirs.log_dir, rlevel, nowTime);			
 			//创建一个用于读写的空文件
 			ftemp = fopen(ftemp_path, "w+");
 			// example 写入一行字符串
