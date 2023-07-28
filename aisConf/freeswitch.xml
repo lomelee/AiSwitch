@@ -7,7 +7,7 @@
   <!-- 删除之前的临时文件 -->
   <X-PRE-PROCESS cmd="exec" data="cd /usr/local/freeswitch/log; rm *.txml -rf"/>
   <!-- 系统配置 -->
-  <X-PRE-PROCESS cmd="exec-config" data="wget -qO - http://127.0.0.1:6869/switch/config/sys/var"/>
+  <X-PRE-PROCESS cmd="exec-config" data="wget -qO - http://192.168.2.10:6869/switch/config/sys/var"/>
 
   <!-- mod_sofia 依赖用户数据进行授权 -->
   <section name="directory" description="User Directory">
