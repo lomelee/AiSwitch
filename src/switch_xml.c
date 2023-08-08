@@ -1361,45 +1361,27 @@ static FILE *preprocess_exec(const char *cwd, const char *command, FILE *write_f
 
 }
 
-
 static FILE *preprocess_exec_config(const char *cwd, const char *command, FILE *write_fd, int rlevel)
 {
 #ifdef WIN32
-	FILE *fp = NULL;
-	char buffer[1024];
-
-	if (!command || !strlen(command)) goto end;
-
-	if ((fp = _popen(command, "r"))) {
-		while (fgets(buffer, sizeof(buffer), fp) != NULL) {
-			if (fwrite(buffer, 1, strlen(buffer), write_fd) <= 0) {
-					break;
-			}
-		}
-
-		if(feof(fp)) {
-			_pclose(fp);
-		} else {
-			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, "Exec failed to read the pipe of [%s] to the end\n", command);
-		}
-	} else {
-		switch_snprintf(buffer, sizeof(buffer), "<!-- exec can not execute [%s] -->", command);
-		fwrite( buffer, 1, strlen(buffer), write_fd);
- 	}
+	// windows 不支持此命令配置方式
+	switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_INFO, "windows not support preprocess_exec_config cwd = %s, command = %s\n", cwd, command);
 #else
+	// pipefd：【0】是读端，【1】是写端。
 	int fds[2], pid = 0;
 
 	if (pipe(fds)) {
 		goto end;
-	} else {					/* good to go */
+	} else {
+		// 创建后台进程
 		pid = switch_fork();
-
-		if (pid < 0) {			/* ok maybe not */
+		if (pid < 0) {
+			// 后台进程创建失败,关闭文件描述符句柄
 			close(fds[0]);
 			close(fds[1]);
 			goto end;
 		} else if (pid) {			
-			/* parent */
+			// 父进程
 			char buf[1024] = "";
 			int bytes;
 			int needReProcess = 0;
@@ -1423,11 +1405,12 @@ static FILE *preprocess_exec_config(const char *cwd, const char *command, FILE *
 				// 写入临时文件
 				if (fwrite(buf, 1, bytes, ftemp) <= 0) {
 					break;
-				}				
+				}
 			}
 			close(fds[0]);
 			// 关闭文件流
-			fclose(ftemp);			
+			fclose(ftemp);
+			// 等待子进程处理
 			waitpid(pid, NULL, 0);
 			if (1 == needReProcess) {
 				// 重新解析文件中的内容
@@ -1440,12 +1423,16 @@ static FILE *preprocess_exec_config(const char *cwd, const char *command, FILE *
 				}
 			}			
 		} else {
-			/*  child */
+			// 子进程
+			// 关闭文件句柄
 			switch_close_extra_files(fds, 2);
 			close(fds[0]);
-			// 不指定文件描述符号到
-			dup2(fds[1], STDOUT_FILENO);
+			// 把输出重定向到fds[1]标识的文件
+			// dup2(fds[1], STDOUT_FILENO);
+			// 执行外部命令
 			switch_system(command, SWITCH_TRUE);
+			close(fds[1]);
+			// 执行完成后，退出进程
 			exit(0);
 		}
 	}

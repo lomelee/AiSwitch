@@ -170,6 +170,10 @@ local function prisonLogin(prisonNo)
         -- 提示：“您绑定的亲属没有电话拨打权限”
         session:streamFile("custom/no_family_allow.wav")
         return false
+    elseif code == 2003 then
+        -- 提示：“您的余额可能不足以支付本次通话，请您及时缴费”
+        session:streamFile("custom/balance_tip.wav")
+        return false
     end
 
     if code ~= 0 then
